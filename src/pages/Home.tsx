@@ -1,3 +1,4 @@
+import Playlist from "../components/Playlist/Playlist"
 import RecentlyPlayed from "../components/RecentlyPlayed/RecentlyPlayed"
 
 
@@ -22,6 +23,7 @@ const Home = () => {
   return (
     <div className="home">
       <RecentlyPlayed/>
+      <Playlist/>
       
     </div>
   )
