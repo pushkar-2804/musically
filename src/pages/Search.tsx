@@ -1,13 +1,26 @@
 import axios from "axios";
 import { ChangeEvent, useEffect,useState } from "react";
 import './Search.css'
+import Artists from "../components/Artists/Artists";
 // import Card from "../components/Card";
+
+type apiDataProps = {
+    artists: {
+        hits: {
+            artist:{adamid: number;
+            avatar: string;
+            name: string;
+            verified: boolean;
+            weburl: string;
+        }}[]}
+    tracks: object,
+}
 
 const Search = () => {
     const [inputValue, setInputValue] = useState<string>('');
     const [viewSuggestion, setViewSuggestion] = useState<boolean>(true);
     const [keyword, setKeyword] = useState('');
-    const [apiData, setApiData] = useState<{artists:object,tracks:object}[]>([]);
+    const [apiData, setApiData] = useState<apiDataProps>({} as apiDataProps);
     const [apiSuggestionData, setApiSuggestionData] = useState<any[]>([]);
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -36,6 +49,7 @@ const Search = () => {
         searchKeyword()}
     },[keyword]);
     useEffect(() => {
+        if (!viewSuggestion) setViewSuggestion(true);
     // Call the API whenever the input value changes
     const fetchData = async () => {
         const options = {
@@ -74,9 +88,9 @@ const Search = () => {
         </div>
     })}
 
-    {/* {!viewSuggestion && 
+    {!viewSuggestion && 
         <Artists data={apiData.artists}/>
-    } */}
+    }
 </div>
 )}
 

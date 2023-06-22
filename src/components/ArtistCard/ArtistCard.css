@@ -1,0 +1,8 @@
+.cardArtist{
+    background-color: #2b2727 !important;
+    color: white !important;
+    border: #4e4747e2 2px solid;
+  }
+  .cardArtist__title{
+    overflow: visible;
+  }
