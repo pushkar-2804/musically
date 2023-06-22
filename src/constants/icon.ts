@@ -1,3 +1,5 @@
+import { ReactHTMLElement } from "react"
+
 type IconProps ={
     name: string,
     path: string,
@@ -10,3 +12,7 @@ export const menuItems :IconProps[] = [
     {name:"Favourites",path:"M5.495 4c-1.375 0-1.375-2 0-2h16.505v-2h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-16.505z",route:"favourites"},
     {name:"Playlists",path:"M15 21v-10l9 5-9 5zm-3 0h-12v-2h12v2zm0-4.024h-12v-2h12v2zm0-3.976h-12v-2h12v2zm12-4h-24v-2h24v2zm0-6v2h-24v-2h24z", route:"playlists"}
 ]
+
+
+
+  
