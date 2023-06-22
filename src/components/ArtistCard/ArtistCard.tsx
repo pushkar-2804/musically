@@ -16,7 +16,7 @@ const ArtistCard: React.FC<IArtistCard> = ({ artist, onClick}) => {
     <div className="card cardArtist" onClick={onClick}>
       <div className="card__content">
         <div className="card__wrapper">
-          <h3 className="cardArtist__title">{artist}</h3>
+          <p className="cardArtist__title">{artist}</p>
         </div>
         <Play />
       </div>

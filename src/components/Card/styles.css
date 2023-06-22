@@ -1,12 +1,12 @@
 .card {
   padding: 20px;
   border-radius: 5px;
-  background-color: #2b2727;
-  transition: background-color 250ms ease-out;
+  background-color: #423a39 !important;
+  /* transition: background-color 250ms ease-out; */
   cursor: pointer;
 }
 .card:hover {
-  background-color: #352d2c;
+  background-color: #554C4B !important;
 }
 
 
@@ -36,7 +36,7 @@
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  /* color: white; */
+  color: white;
 }
 .card__artist {
   font-size: 13px;
