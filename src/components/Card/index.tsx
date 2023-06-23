@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./styles.css";
 import Play from "../Play";
-import MyContext from "../../context";
+import Heart from "../Heart";
+// import MyContext from "../../context";
 
 export interface ICard {
   id: number;
@@ -12,12 +13,13 @@ export interface ICard {
 }
 
 const Card: React.FC<ICard> = ({ title, artist, thumbnail, url }) => {
-  const { updateData } = useContext(MyContext);
+  // const { updateData } = useContext(MyContext);
+  // const [favourites, setFavorites] = useState(null);
 
   return (
     <div
       className="card"
-      onClick={() => updateData({ title, artist, thumbnail })}
+      // onClick={() => updateData({ title, artist, thumbnail })}
     >
       <div
         className="card__thumbnail"
@@ -29,7 +31,10 @@ const Card: React.FC<ICard> = ({ title, artist, thumbnail, url }) => {
           <h3 className="card__title">{title}</h3>
           <span className="card__artist">{artist}</span>
         </div>
-        <Play url={url} />
+        <div className="d-flex">
+          <Heart size="regular" />
+          <Play url={url} />
+        </div>
       </div>
     </div>
   );

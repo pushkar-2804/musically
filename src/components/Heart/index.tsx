@@ -1,18 +1,22 @@
-import React, {useState} from 'react'
-import './styles.css'
+import React, { useState } from "react";
+import "./styles.css";
 
 interface IHeart {
-  size?: 'regular' | 'big'
+  size?: "regular" | "big";
 }
 
-const Heart: React.FC<IHeart> = ({size = 'regular'}) => {
-  const [active, setActive] = useState(false)
+const Heart: React.FC<IHeart> = ({ size = "regular" }) => {
+  const [active, setActive] = useState(false);
 
   return (
     <div onClick={() => setActive(!active)}>
       {active ? (
         <svg
-          className={size === 'big' ? 'heart heart--full heart--big' : 'heart heart--full'}
+          className={
+            size === "big"
+              ? "heart heart--full heart--big"
+              : "heart heart--full"
+          }
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -20,7 +24,7 @@ const Heart: React.FC<IHeart> = ({size = 'regular'}) => {
         </svg>
       ) : (
         <svg
-          className={size === 'big' ? 'heart heart--big' : 'heart'}
+          className={size === "big" ? "heart heart--big" : "heart"}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -28,7 +32,7 @@ const Heart: React.FC<IHeart> = ({size = 'regular'}) => {
         </svg>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Heart
+export default Heart;

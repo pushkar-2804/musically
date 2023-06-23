@@ -3,6 +3,7 @@
   height: 16px;
   fill: white;
   cursor: pointer;
+  margin: auto 8px;
   transition: all 350ms ease-out;
 }
 .heart--big {

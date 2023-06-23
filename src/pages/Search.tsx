@@ -7,7 +7,7 @@ import Playlist from "../components/Playlist/Playlist";
 import { artistProps } from "../components/Artists/Artists";
 import { tracksProps } from "../components/Playlist/Playlist";
 
-type apiDataProps = artistProps & tracksProps;
+export type apiDataProps = artistProps & tracksProps;
 
 const Search = () => {
   const [inputValue, setInputValue] = useState<string>("");
