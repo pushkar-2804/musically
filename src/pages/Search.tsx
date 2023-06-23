@@ -27,7 +27,7 @@ const Search = () => {
           params: { term: keyword },
           headers: {
             "X-RapidAPI-Key":
-              "b384c5e737msh9ade01c4c2b3fd8p1fff3fjsn74127e808d1b",
+              "e1319596a0msh07b4162bc8b1097p1e1e84jsndfb0c10d633e",
             "X-RapidAPI-Host": "shazam.p.rapidapi.com",
           },
         };
@@ -53,7 +53,7 @@ const Search = () => {
         params: { term: inputValue },
         headers: {
           "X-RapidAPI-Key":
-            "b384c5e737msh9ade01c4c2b3fd8p1fff3fjsn74127e808d1b",
+            "e1319596a0msh07b4162bc8b1097p1e1e84jsndfb0c10d633e",
           "X-RapidAPI-Host": "shazam.p.rapidapi.com",
         },
       };
@@ -72,7 +72,7 @@ const Search = () => {
   return (
     <div>
       <div>
-        Search
+        <span className="m-2">Search</span>
         <div className="input-group mb-3">
           <input
             type="text"
@@ -82,14 +82,6 @@ const Search = () => {
             value={inputValue}
             onChange={handleInputChange}
           />
-          <button
-            className="btn btn-outline-secondary"
-            type="button"
-            id="button-addon2"
-          >
-            {" "}
-            Search
-          </button>
         </div>
       </div>
       {viewSuggestion &&
@@ -97,7 +89,7 @@ const Search = () => {
           return (
             <div
               key={index}
-              className="searchSuggestions p-2"
+              className="searchSuggestions p-2 "
               onClick={() => setKeyword(item.term)}
             >
               {item.term}

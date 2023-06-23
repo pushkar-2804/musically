@@ -37,7 +37,7 @@ const Playlist = (props: tracksProps) => {
               title={hit.track.title}
               artist={hit.track.subtitle}
               thumbnail={hit.track.images.coverart}
-              onClick={() => window.open(hit.track.url)}
+              url={hit.track.url}
             />
           );
         })}
