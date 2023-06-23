@@ -1,15 +1,12 @@
 import TopTracks from "../components/TopTracks/TopTracks";
-import { ApiProvider } from "../utils/ApiContext";
+import Favourites from "./Favourites";
 
 const Home = () => {
-  // const [apiData, setApiData] = useState<apiDataProps>({} as apiDataProps);
-
   return (
-    <ApiProvider>
-      <div className="home">
-        <TopTracks />
-      </div>
-    </ApiProvider>
+    <div className="home">
+      <TopTracks />
+      <Favourites />
+    </div>
   );
 };
 

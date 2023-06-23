@@ -9,7 +9,12 @@
   background-color: #554C4B !important;
 }
 
+.card__count{
+  font-size: 16px;
+  text-align: end;
+  color: white !important;
 
+}
 
 .card__thumbnail {
   width: 100%;

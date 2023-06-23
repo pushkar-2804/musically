@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import Play from "../Play";
 import Heart from "../Heart";
@@ -11,10 +11,13 @@ export interface ICard {
   thumbnail: string;
   url?: string;
 }
+export interface ICardFavorite {
+  favourites: Boolean;
+}
 
 const Card: React.FC<ICard> = ({ title, artist, thumbnail, url }) => {
   // const { updateData } = useContext(MyContext);
-  // const [favourites, setFavorites] = useState(null);
+  const [favourites, setFavourites] = useState<boolean>(false);
 
   return (
     <div
@@ -32,7 +35,11 @@ const Card: React.FC<ICard> = ({ title, artist, thumbnail, url }) => {
           <span className="card__artist">{artist}</span>
         </div>
         <div className="d-flex">
-          <Heart size="regular" />
+          <Heart
+            size="regular"
+            favourites={favourites}
+            setFavourites={setFavourites}
+          />
           <Play url={url} />
         </div>
       </div>

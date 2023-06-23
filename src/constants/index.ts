@@ -1,5 +1,6 @@
 import { menuItems } from "./icon";
+import {  optionsChartTrack } from './optionConfig';
 
 
 
-export {menuItems};
+export {menuItems,optionsChartTrack};

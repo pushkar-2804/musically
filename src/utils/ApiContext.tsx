@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import { optionsChartTrack } from "../constants/index";
 
 interface ApiData {
   title: string;
@@ -22,13 +23,13 @@ interface ApiData {
 }
 
 interface ApiContextType {
-  apiData: ApiData[];
-  status: Status;
+  apiChartTrack: ApiData[];
+  statusTrack: Status;
 }
 
 const initialApiContext: ApiContextType = {
-  apiData: [],
-  status: "loading",
+  apiChartTrack: [],
+  statusTrack: "loading",
 };
 type Status = "loading" | "success" | "error";
 
@@ -37,39 +38,31 @@ export const ApiContext = createContext<ApiContextType>(initialApiContext);
 export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [apiData, setApiData] = useState<ApiData[]>([]);
-  const [status, setStatus] = useState<Status>("loading");
+  const [apiChartTrack, setApiChartTrack] = useState<ApiData[]>([]);
+  const [statusTrack, setStatusTrack] = useState<Status>("loading");
 
   useEffect(() => {
     const searchKeyword = async () => {
-      const options = {
-        method: "GET",
-        url: "https://shazam.p.rapidapi.com/charts/track",
-        params: {
-          pageSize: "4",
-          startFrom: "0",
-        },
-        headers: {
-          "X-RapidAPI-Key":
-            "e1319596a0msh07b4162bc8b1097p1e1e84jsndfb0c10d633e",
-          "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-        },
-      };
       try {
-        const response = await axios.request(options);
-        console.log(response.data.tracks);
-        setApiData(response.data.tracks);
-        setStatus("success");
+        const response = await axios.request(optionsChartTrack);
+        // console.log(response.data.tracks);
+        setApiChartTrack(response.data.tracks);
+        setStatusTrack("success");
       } catch (error) {
         console.error(error);
-        setStatus("error");
+        setStatusTrack("error");
       }
     };
     searchKeyword();
   }, []);
 
   return (
-    <ApiContext.Provider value={{ apiData, status }}>
+    <ApiContext.Provider
+      value={{
+        apiChartTrack,
+        statusTrack,
+      }}
+    >
       {children}
     </ApiContext.Provider>
   );

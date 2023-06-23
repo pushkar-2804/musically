@@ -3,6 +3,7 @@ import "./App.css";
 import Sidebar from "./components/sidebar/Sidebar";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
+import { ApiProvider } from "./utils/ApiContext";
 // import { useState } from "react";
 // import MyContext, { dataProp } from "./context";
 
@@ -16,15 +17,15 @@ const App = () => {
     <div className="app">
       <Sidebar />
       <main className="main">
-        {/* <MyContext.Provider value={{ data, updateData }}> */}
-        <Routes>
-          {/* <Route path="/album/:id">
+        <ApiProvider>
+          <Routes>
+            {/* <Route path="/album/:id">
                 <AlbumPage />
               </Route> */}
-          <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
-        </Routes>
-        {/* </MyContext.Provider> */}
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<Search />} />
+          </Routes>
+        </ApiProvider>
       </main>
     </div>
   );

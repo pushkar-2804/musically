@@ -5,15 +5,15 @@ import Card from "../Card";
 import Skeleton from "../Skeleton";
 
 const TopTracks = () => {
-  const { apiData, status } = useContext(ApiContext);
+  const { apiChartTrack, statusTrack } = useContext(ApiContext);
 
   return (
     <section className="rplayed">
       <h2 className="subtitle">Top Tracks</h2>
       <div className="rplayed__grid">
-        {status === "loading"
-          ? [...Array(4).keys()].map((n) => <Skeleton height="220px" key={n} />)
-          : apiData?.map((data) => {
+        {statusTrack === "loading"
+          ? [...Array(8).keys()].map((n) => <Skeleton height="220px" key={n} />)
+          : apiChartTrack?.map((data) => {
               // setLoading(false);
               return (
                 <Card
