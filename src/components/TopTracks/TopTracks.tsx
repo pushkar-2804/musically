@@ -21,6 +21,7 @@ const TopTracks = () => {
                   title={data.title}
                   id={Number(data.key)}
                   artist={data.subtitle}
+                  url={data.url}
                   thumbnail={data.images.background}
                 />
               );

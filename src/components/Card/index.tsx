@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import Play from "../Play";
 import Heart from "../Heart";
-// import MyContext from "../../context";
+import { ApiContext } from "../../utils/ApiContext";
 
 export interface ICard {
   id: number;
@@ -10,20 +10,36 @@ export interface ICard {
   artist: string;
   thumbnail: string;
   url?: string;
-}
-export interface ICardFavorite {
-  favourites: Boolean;
+  isFavorite: boolean;
 }
 
-const Card: React.FC<ICard> = ({ title, artist, thumbnail, url }) => {
-  // const { updateData } = useContext(MyContext);
-  const [favourites, setFavourites] = useState<boolean>(false);
+const Card: React.FC<ICard> = ({
+  id,
+  title,
+  artist,
+  thumbnail,
+  url,
+  isFavorite,
+}) => {
+  const { addFavorite, removeFavorite, favList } = React.useContext(ApiContext);
+  const [isFav, setIsFav] = useState(isFavorite);
+
+  useEffect(() => {
+    const isCardFavorite = favList.some((favCard) => favCard.id === id);
+    setIsFav(isCardFavorite);
+  }, [favList, id]);
+
+  const handleFavoriteClick = () => {
+    setIsFav(!isFav);
+    if (isFav) {
+      removeFavorite({ id, title, artist, thumbnail, url, isFavorite });
+    } else {
+      addFavorite({ id, title, artist, thumbnail, url, isFavorite: true });
+    }
+  };
 
   return (
-    <div
-      className="card"
-      // onClick={() => updateData({ title, artist, thumbnail })}
-    >
+    <div className="card">
       <div
         className="card__thumbnail"
         style={{ backgroundImage: `url(${thumbnail})` }}
@@ -37,8 +53,8 @@ const Card: React.FC<ICard> = ({ title, artist, thumbnail, url }) => {
         <div className="d-flex">
           <Heart
             size="regular"
-            favourites={favourites}
-            setFavourites={setFavourites}
+            onClick={handleFavoriteClick}
+            isFavorite={isFav}
           />
           <Play url={url} />
         </div>

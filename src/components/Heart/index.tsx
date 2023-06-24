@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 
 interface IHeart {
   size?: "regular" | "big";
-  favourites: boolean;
-  setFavourites: any;
+  isFavorite: boolean;
+  onClick: () => void;
 }
 
-const Heart: React.FC<IHeart> = ({
-  size = "regular",
-  favourites,
-  setFavourites,
-}) => {
+const Heart: React.FC<IHeart> = ({ size = "regular", onClick, isFavorite }) => {
+  const handleClick = () => {
+    onClick();
+    setActive(!active);
+  };
+  const [active, setActive] = useState(isFavorite);
+  useEffect(() => {
+    setActive(isFavorite);
+  }, [isFavorite]);
+
   return (
-    <div onClick={() => setFavourites(!favourites)}>
-      {favourites ? (
+    <div onClick={handleClick}>
+      {active ? (
         <svg
           className={
             size === "big"
