@@ -2,10 +2,13 @@ import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import "./Search.css";
 import Artists from "../components/Artists/Artists";
-import Playlist from "../components/Playlist/Playlist";
-// import Card from "../components/Card";
+import SearchedResults from "../components/SearchedResults/SearchedResults";
 import { artistProps } from "../components/Artists/Artists";
-import { tracksProps } from "../components/Playlist/Playlist";
+import {
+  optionsAutoComplete,
+  optionsSearchKeyword,
+  tracksProps,
+} from "../constants";
 
 export type apiDataProps = artistProps & tracksProps;
 
@@ -21,18 +24,8 @@ const Search = () => {
   useEffect(() => {
     if (keyword !== "") {
       const searchKeyword = async () => {
-        const options = {
-          method: "GET",
-          url: "https://shazam.p.rapidapi.com/search",
-          params: { term: keyword },
-          headers: {
-            "X-RapidAPI-Key":
-              "e1319596a0msh07b4162bc8b1097p1e1e84jsndfb0c10d633e",
-            "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-          },
-        };
         try {
-          const response = await axios.request(options);
+          const response = await axios.request(optionsSearchKeyword(keyword));
           console.log(response.data);
           setApiData(response.data);
           setViewSuggestion(false);
@@ -47,18 +40,8 @@ const Search = () => {
     if (!viewSuggestion) setViewSuggestion(true);
     // Call the API whenever the input value changes
     const fetchData = async () => {
-      const options = {
-        method: "GET",
-        url: "https://shazam.p.rapidapi.com/auto-complete",
-        params: { term: inputValue },
-        headers: {
-          "X-RapidAPI-Key":
-            "e1319596a0msh07b4162bc8b1097p1e1e84jsndfb0c10d633e",
-          "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-        },
-      };
       try {
-        const response = await axios.request(options);
+        const response = await axios.request(optionsAutoComplete(inputValue));
         console.log(response.data.hints);
         setApiSuggestionData(response.data.hints);
       } catch (error) {
@@ -99,7 +82,7 @@ const Search = () => {
 
       {!viewSuggestion && (
         <div>
-          <Playlist tracks={apiData.tracks} />
+          <SearchedResults tracks={apiData.tracks} />
           <Artists artists={apiData.artists} />
         </div>
       )}

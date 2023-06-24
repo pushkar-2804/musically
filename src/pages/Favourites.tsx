@@ -9,9 +9,9 @@ const Favourites = () => {
       <h2 className="subtitle">Favourites</h2>
       <div className="rplayed__grid">
         {favList?.map((data) => {
-          console.log(data);
           return (
             <Card
+              key={data.id}
               id={data.id}
               artist={data.artist}
               thumbnail={data.thumbnail}

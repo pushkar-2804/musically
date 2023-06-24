@@ -3,7 +3,7 @@ import axios from "axios";
 import { optionsChartTrack } from "../constants/index";
 import { ICard } from "../components/Card";
 
-interface ApiData {
+export interface ApiData {
   title: string;
   subtitle: string;
   type: string;
@@ -23,17 +23,31 @@ interface ApiData {
   share: {};
 }
 
+export interface IPlaylist {
+  id: number;
+  name: string;
+  cards: number[];
+}
+
 interface ApiContextType {
   apiChartTrack: ApiData[];
   favList: ICard[];
   addFavorite: (card: ICard) => void;
   removeFavorite: (card: ICard) => void;
+  playlists: IPlaylist[];
+  addPlaylist: (name: string) => void;
+  addToPlaylist: (card: ICard, playlistId: number) => void;
+  removeFromPlaylist: (card: ICard, playlistId: number) => void;
   statusTrack: Status;
 }
 
 const initialApiContext: ApiContextType = {
   apiChartTrack: [],
   favList: [],
+  playlists: [],
+  addPlaylist: () => {},
+  addToPlaylist: () => {},
+  removeFromPlaylist: () => {},
   addFavorite: () => {},
   removeFavorite: () => {},
   statusTrack: "loading",
@@ -50,6 +64,12 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
     const storedFavList = localStorage.getItem("favList");
     return storedFavList ? JSON.parse(storedFavList) : [];
   });
+  const storedPlaylists = localStorage.getItem("playlists");
+  const initialPlaylists: IPlaylist[] = storedPlaylists
+    ? JSON.parse(storedPlaylists)
+    : [];
+
+  const [playlists, setPlaylists] = useState<IPlaylist[]>(initialPlaylists);
   const [statusTrack, setStatusTrack] = useState<Status>("loading");
 
   const addFavorite = (card: ICard) => {
@@ -64,14 +84,43 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   const removeFavorite = (card: ICard) => {
     setFavList((prevFavList) => prevFavList.filter((c) => c.id !== card.id));
   };
-  // Retrieve favList from local storage on mount
-  // useEffect(() => {
-  //   // Retrieve favList from local storage
-  //   const storedFavList = localStorage.getItem("favList");
-  //   if (storedFavList) {
-  //     setFavList(JSON.parse(storedFavList));
-  //   }
-  // }, []); // Run only once on component mount
+
+  const addPlaylist = (name: string) => {
+    const newPlaylist: IPlaylist = {
+      id: playlists.length + 1,
+      name: name,
+      cards: [],
+    };
+    setPlaylists([...playlists, newPlaylist]);
+  };
+
+  const addToPlaylist = (card: ICard, playlistId: number) => {
+    setPlaylists((prevPlaylists) => {
+      return prevPlaylists.map((playlist) => {
+        if (playlist.id === playlistId && !playlist.cards.includes(card.id)) {
+          return {
+            ...playlist,
+            cards: [...playlist.cards, card.id],
+          };
+        }
+        return playlist;
+      });
+    });
+  };
+
+  const removeFromPlaylist = (card: ICard, playlistId: number) => {
+    setPlaylists((prevPlaylists) => {
+      return prevPlaylists.map((playlist) => {
+        if (playlist.id === playlistId && playlist.cards.includes(card.id)) {
+          return {
+            ...playlist,
+            cards: playlist.cards.filter((cardId) => cardId !== card.id),
+          };
+        }
+        return playlist;
+      });
+    });
+  };
 
   useEffect(() => {
     // Update local storage whenever favList changes
@@ -93,13 +142,22 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
     searchKeyword();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("playlists", JSON.stringify(playlists));
+  }, [playlists]);
+
   return (
     <ApiContext.Provider
       value={{
         apiChartTrack,
         favList,
+        addPlaylist,
         addFavorite,
         removeFavorite,
+        playlists,
+        addToPlaylist,
+        removeFromPlaylist,
+
         statusTrack,
       }}
     >

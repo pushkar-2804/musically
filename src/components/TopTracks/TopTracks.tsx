@@ -23,6 +23,7 @@ const TopTracks = () => {
                   artist={data.subtitle}
                   url={data.url}
                   thumbnail={data.images.background}
+                  isFavorite
                 />
               );
             })}

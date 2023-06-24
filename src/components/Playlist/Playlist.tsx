@@ -1,47 +1,28 @@
-import Card from "../Card";
+import { useContext } from "react";
+import { ApiContext } from "../../utils/ApiContext";
+import PlaylistCards from "../PlaylistsCards/PlaylistsCards";
+interface PlaylistProps {
+  playlistId: number | null;
+  length: number;
+}
 
-export type tracksProps = {
-  tracks: {
-    hits: {
-      track: {
-        layout: string;
-        type: string;
-        key: string;
-        title: string;
-        subtitle: string;
-        share: { [key: string]: any };
-        images: {
-          background: string;
-          coverart: string;
-          coverarthq: string;
-          joecolor: string;
-        };
-        hub: { [key: string]: any };
-        artists: { id: string; adamid: string }[];
-        url: string;
-      };
-    }[];
-  };
-};
+const Playlist: React.FC<PlaylistProps> = ({ playlistId, length }) => {
+  const { playlists } = useContext(ApiContext);
 
-const Playlist = (props: tracksProps) => {
+  const playlist = playlists.find((p) => p.id === playlistId);
+
+  if (!length) {
+    return <div>No Playlist is created yet..</div>;
+  }
+
+  if (!playlist) {
+    return <div>Select a playlist</div>;
+  }
+
   return (
     <div className="rplayed">
-      <h3 className="subtitle"> Playlists </h3>
-      <div className="rplayed__grid">
-        {props.tracks?.hits?.map((hit) => {
-          return (
-            <Card
-              id={Number(hit.track.key)}
-              key={hit.track.key}
-              title={hit.track.title}
-              artist={hit.track.subtitle}
-              thumbnail={hit.track.images.coverart}
-              url={hit.track.url}
-            />
-          );
-        })}
-      </div>
+      <h3 className="subtitle">{playlist.name}</h3>
+      <PlaylistCards cards={playlist.cards} />
     </div>
   );
 };

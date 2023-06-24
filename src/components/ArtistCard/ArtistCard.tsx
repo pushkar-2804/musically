@@ -1,17 +1,15 @@
-import React from 'react'
-import './ArtistCard.css'
-import Play from '../Play'
+import React from "react";
+import "./ArtistCard.css";
+import Play from "../Play";
 
 export interface IArtistCard {
-  id: number,
-  artist: string,
-  onClick?: () => void
+  id: number;
+  artist: string;
+  onClick?: () => void;
 }
 
-
-
-const ArtistCard: React.FC<IArtistCard> = ({ artist, onClick}) => {
-    // console.log (title);
+const ArtistCard: React.FC<IArtistCard> = ({ artist, onClick }) => {
+  // console.log (title);
   return (
     <div className="card cardArtist" onClick={onClick}>
       <div className="card__content">
@@ -21,7 +19,7 @@ const ArtistCard: React.FC<IArtistCard> = ({ artist, onClick}) => {
         <Play />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ArtistCard
+export default ArtistCard;

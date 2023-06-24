@@ -9,17 +9,43 @@ export const optionsChartTrack = {
       startFrom: "0",
     },
     headers: {
-      "X-RapidAPI-Key":
-        "e1319596a0msh07b4162bc8b1097p1e1e84jsndfb0c10d633e",
-      "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-    },
+      'X-RapidAPI-Key': 'a445dbc7afmsh5c661eb64a62627p16dc21jsnd91fd32493e0',
+      'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
+    }
   };
-// export const optionsChartList = {
-//     method: "GET",
-//     url: "https://shazam.p.rapidapi.com/charts/list",
-//     headers: {
-//       "X-RapidAPI-Key":
-//         "e1319596a0msh07b4162bc8b1097p1e1e84jsndfb0c10d633e",
-//       "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-//     },
-//   };
+export const optionsFetchSong = (cardId:number)=> {return({
+    method: 'GET',
+    url: 'https://shazam.p.rapidapi.com/songs/get-details',
+    params: {
+      key: `${cardId}`
+    },
+    headers: {
+      'X-RapidAPI-Key': 'a445dbc7afmsh5c661eb64a62627p16dc21jsnd91fd32493e0',
+      'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
+    }
+  })};
+
+
+export const optionsAutoComplete =(inputValue: string)=> {
+  return({
+  method: "GET",
+  url: "https://shazam.p.rapidapi.com/auto-complete",
+  params: { term: inputValue },
+  headers: {
+    "X-RapidAPI-Key":
+      "a445dbc7afmsh5c661eb64a62627p16dc21jsnd91fd32493e0",
+    "X-RapidAPI-Host": "shazam.p.rapidapi.com",
+  }});
+};
+
+export const optionsSearchKeyword =(keyword: string)=> {
+  return({
+  method: "GET",
+  url: "https://shazam.p.rapidapi.com/search",
+  params: { term: keyword },
+  headers: {
+    "X-RapidAPI-Key":
+      "a445dbc7afmsh5c661eb64a62627p16dc21jsnd91fd32493e0",
+    "X-RapidAPI-Host": "shazam.p.rapidapi.com",
+  }});
+};

@@ -3,15 +3,8 @@ import "./styles.css";
 import Play from "../Play";
 import Heart from "../Heart";
 import { ApiContext } from "../../utils/ApiContext";
-
-export interface ICard {
-  id: number;
-  title: string;
-  artist: string;
-  thumbnail: string;
-  url?: string;
-  isFavorite: boolean;
-}
+import ThreeDotMenu from "../ThreeDotMenu/ThreeDotMenu";
+import { ICard } from "../../constants/index";
 
 const Card: React.FC<ICard> = ({
   id,
@@ -21,9 +14,16 @@ const Card: React.FC<ICard> = ({
   url,
   isFavorite,
 }) => {
-  const { addFavorite, removeFavorite, favList } = React.useContext(ApiContext);
+  const {
+    addFavorite,
+    removeFavorite,
+    favList,
+    playlists,
+    addToPlaylist,
+    removeFromPlaylist,
+  } = React.useContext(ApiContext);
   const [isFav, setIsFav] = useState(isFavorite);
-
+  const card = { id, title, artist, thumbnail, url, isFavorite };
   useEffect(() => {
     const isCardFavorite = favList.some((favCard) => favCard.id === id);
     setIsFav(isCardFavorite);
@@ -36,6 +36,19 @@ const Card: React.FC<ICard> = ({
     } else {
       addFavorite({ id, title, artist, thumbnail, url, isFavorite: true });
     }
+  };
+
+  const handlePlaylistClick = (playlistId: number) => {
+    if (isCardInPlaylist(playlistId)) {
+      removeFromPlaylist(card, playlistId);
+    } else {
+      addToPlaylist(card, playlistId);
+    }
+  };
+
+  const isCardInPlaylist = (playlistId: number) => {
+    const playlist = playlists.find((p) => p.id === playlistId);
+    return playlist?.cards.includes(card.id) || false;
   };
 
   return (
@@ -57,6 +70,11 @@ const Card: React.FC<ICard> = ({
             isFavorite={isFav}
           />
           <Play url={url} />
+          <ThreeDotMenu
+            playlists={playlists}
+            onPlaylistClick={handlePlaylistClick}
+            isCardInPlaylist={isCardInPlaylist}
+          />
         </div>
       </div>
     </div>
