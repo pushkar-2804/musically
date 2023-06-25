@@ -1,4 +1,4 @@
-export type ICard {
+export type ICard =  {
     id: number;
     title: string;
     artist: string;
