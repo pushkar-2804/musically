@@ -1,35 +1,50 @@
 import Keycloak from "keycloak-js";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Initialize Keycloak instance
-const keycloak = new Keycloak({
-  url: "https://your-keycloak-url/auth",
-  realm: "your-realm",
-  clientId: "your-client-id",
+export const keycloak = new Keycloak({
+  realm: "myrealm",
+  url: "http://localhost:8080/",
+  clientId: "myclient",
 });
 
-// Function to initialize Keycloak and authenticate the user
-async function initKeycloak() {
-  try {
-    await keycloak.init({ onLoad: "login-required" });
-    console.log("Authenticated");
-    // You can now redirect to the home screen or perform any other actions
-  } catch (error) {
-    console.error("Authentication error", error);
-  }
-}
-
-// Call the initKeycloak function when the login button is clicked or on page load
-
-// Example usage: Login button click event handler
-function onLoginButtonClick() {
-  initKeycloak();
-}
-
 const Auth = () => {
+  const nav = useNavigate();
+  // State variables
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  // Function to initialize Keycloak and authenticate the user
+  const initKeycloak = async () => {
+    try {
+      await keycloak.init({ onLoad: "login-required" });
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error("Authentication error", error);
+    }
+  };
+  useEffect(() => {
+    if (isAuthenticated) nav("/home");
+    // if (keycloak.authenticated) nav("/home");
+  }, [isAuthenticated, keycloak]);
+
+  function onLoginButtonClick() {
+    initKeycloak();
+  }
+
+  function logout() {
+    keycloak.clearToken();
+    keycloak.logout;
+    setIsAuthenticated(false);
+    nav("/");
+  }
+
   return (
     <div>
       <button type="button" onClick={onLoginButtonClick}>
         Login
+      </button>
+      <button type="button" onClick={logout}>
+        Logout
       </button>
     </div>
   );
