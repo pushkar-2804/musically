@@ -12,7 +12,7 @@ const Playlist: React.FC<PlaylistProps> = ({ playlistId, length }) => {
   const playlist = playlists.find((p) => p.id === playlistId);
 
   if (!length) {
-    return <div>No Playlist is created yet..</div>;
+    return <div>No Playlists created yet..</div>;
   }
 
   if (!playlist) {

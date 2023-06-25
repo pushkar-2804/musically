@@ -1,24 +1,13 @@
 import { useState, useContext } from "react";
-import { Modal, Form } from "react-bootstrap";
 import { ApiContext } from "../utils/ApiContext";
 import Playlist from "../components/Playlist/Playlist";
-import deleteIcon from "../assets/delete.png";
+import deleteIcon from "../assets/Delete.svg";
+import ModalCreatePlaylist from "../components/ModalCreatePlaylist/ModalCreatePlaylist";
 
 const PlayListsPage = () => {
   const [showModal, setShowModal] = useState(false);
-  const { playlists, addPlaylist, removePlaylist } = useContext(ApiContext);
-  const [playlistName, setPlaylistName] = useState("");
+  const { playlists, removePlaylist } = useContext(ApiContext);
   const [activePlaylistId, setActivePlaylistId] = useState<number | null>(null);
-  const handleClose = () => {
-    setShowModal(false);
-  };
-  const handleCreatePlaylist = () => {
-    if (playlistName.trim() !== "") {
-      addPlaylist(playlistName);
-      setPlaylistName("");
-    }
-    handleClose();
-  };
 
   const handleRemovePlaylist = (playlistId: number) => {
     removePlaylist(playlistId);
@@ -33,42 +22,10 @@ const PlayListsPage = () => {
         </div>
       </div>
       {showModal && (
-        <Modal
-          centered
-          show={showModal}
-          onHide={() => setShowModal(false)}
-          className="modal"
-          style={{
-            color: "black",
-          }}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Create a Playlist</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter playlist's name"
-                  name="name"
-                  value={playlistName}
-                  onChange={(e) => setPlaylistName(e.target.value)}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <button onClick={handleClose}>Cancel</button>
-            <button
-              type="submit"
-              className="btn btn-danger"
-              onClick={handleCreatePlaylist}
-            >
-              Create
-            </button>
-          </Modal.Footer>
-        </Modal>
+        <ModalCreatePlaylist
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
       )}
       <div className="rplayed__grid">
         {playlists.map((playlist) => (
