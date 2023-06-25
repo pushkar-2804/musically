@@ -26,18 +26,32 @@ const PlaylistCards: React.FC<PlaylistCardsProps> = ({ cards }) => {
 
     fetchCardDetails();
   }, [cards]);
+
+  const storeCardDetails = (cardId: number, cardDetails: ICard) => {
+    localStorage.setItem(`card_${cardId}`, JSON.stringify(cardDetails));
+  };
+
   const getCardDetails = async (cardId: number) => {
     const existingCard = apiChartTrack.find(
       (track) => Number(track.key) === cardId
     );
     if (existingCard) {
+      const formattedCardData = formatCardData(existingCard);
+      storeCardDetails(cardId, formattedCardData);
       return formatCardData(existingCard);
+    }
+    const storedCardData = localStorage.getItem(`card_${cardId}`);
+    if (storedCardData) {
+      return JSON.parse(storedCardData);
     }
 
     try {
       console.log(`Fetching card details for card ID: ${cardId}`);
       const cardDetails = await fetchSongDetails(cardId);
-      return cardDetails;
+      if (cardDetails) {
+        storeCardDetails(cardId, cardDetails);
+        return cardDetails;
+      }
     } catch (error) {
       console.error("Error fetching card details:", error);
       return null;

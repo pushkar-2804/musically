@@ -9,6 +9,7 @@ import {
   optionsSearchKeyword,
   tracksProps,
 } from "../constants";
+import Skeleton from "../components/Skeleton";
 
 export type apiDataProps = artistProps & tracksProps;
 
@@ -16,6 +17,7 @@ const Search = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [viewSuggestion, setViewSuggestion] = useState<boolean>(true);
   const [keyword, setKeyword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [apiData, setApiData] = useState<apiDataProps>({} as apiDataProps);
   const [apiSuggestionData, setApiSuggestionData] = useState<any[]>([]);
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,12 +25,14 @@ const Search = () => {
   };
   useEffect(() => {
     if (keyword !== "") {
+      setViewSuggestion(false);
+      setLoading(true);
       const searchKeyword = async () => {
         try {
           const response = await axios.request(optionsSearchKeyword(keyword));
           console.log(response.data);
           setApiData(response.data);
-          setViewSuggestion(false);
+          setLoading(false);
         } catch (error) {
           console.error(error);
         }
@@ -51,6 +55,8 @@ const Search = () => {
 
     fetchData();
   }, [inputValue]);
+
+  useEffect(() => console.log(loading), [loading]);
 
   return (
     <div>
@@ -80,7 +86,16 @@ const Search = () => {
           );
         })}
 
-      {!viewSuggestion && (
+      {loading && (
+        <div className="rplayed__grid">
+          {" "}
+          {[...Array(5).keys()].map((n) => (
+            <Skeleton height="220px" key={n} />
+          ))}
+        </div>
+      )}
+
+      {!viewSuggestion && !loading && (
         <div>
           <SearchedResults tracks={apiData.tracks} />
           <Artists artists={apiData.artists} />

@@ -2,10 +2,11 @@ import { useState, useContext } from "react";
 import { Modal, Form } from "react-bootstrap";
 import { ApiContext } from "../utils/ApiContext";
 import Playlist from "../components/Playlist/Playlist";
+import deleteIcon from "../assets/delete.png";
 
 const PlayListsPage = () => {
   const [showModal, setShowModal] = useState(false);
-  const { playlists, addPlaylist } = useContext(ApiContext);
+  const { playlists, addPlaylist, removePlaylist } = useContext(ApiContext);
   const [playlistName, setPlaylistName] = useState("");
   const [activePlaylistId, setActivePlaylistId] = useState<number | null>(null);
   const handleClose = () => {
@@ -17,6 +18,10 @@ const PlayListsPage = () => {
       setPlaylistName("");
     }
     handleClose();
+  };
+
+  const handleRemovePlaylist = (playlistId: number) => {
+    removePlaylist(playlistId);
   };
 
   return (
@@ -72,9 +77,17 @@ const PlayListsPage = () => {
             className="card "
             onClick={() => setActivePlaylistId(playlist.id)}
           >
-            <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-between align-items-center">
               <h3 className="card__title">{playlist.name}</h3>
-              <span className="card__artist">({playlist.cards.length})</span>
+              <div className="d-flex align-items-center">
+                <span className="card__artist">({playlist.cards.length})</span>
+                <button
+                  onClick={() => handleRemovePlaylist(playlist.id)}
+                  className="btn text-light"
+                >
+                  <img src={deleteIcon} alt="delete" />
+                </button>
+              </div>
             </div>
           </div>
         ))}

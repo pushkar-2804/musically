@@ -1,27 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
-import { optionsChartTrack } from "../constants/index";
-import { ICard } from "../components/Card";
-
-export interface ApiData {
-  title: string;
-  subtitle: string;
-  type: string;
-  url: string;
-  images: {
-    background: string;
-    coverart: string;
-    coverarthq: string;
-    joecolor: string;
-  };
-  hub: {};
-  artists: {}[];
-  highlights: {};
-  layout: string;
-  key: string;
-  properties: {};
-  share: {};
-}
+import { ICard, optionsChartTrack } from "../constants/index";
+import { ApiData } from "../constants/interface";
 
 export interface IPlaylist {
   id: number;
@@ -36,6 +16,7 @@ interface ApiContextType {
   removeFavorite: (card: ICard) => void;
   playlists: IPlaylist[];
   addPlaylist: (name: string) => void;
+  removePlaylist: (playlistId: number) => void;
   addToPlaylist: (card: ICard, playlistId: number) => void;
   removeFromPlaylist: (card: ICard, playlistId: number) => void;
   statusTrack: Status;
@@ -46,6 +27,7 @@ const initialApiContext: ApiContextType = {
   favList: [],
   playlists: [],
   addPlaylist: () => {},
+  removePlaylist: () => {},
   addToPlaylist: () => {},
   removeFromPlaylist: () => {},
   addFavorite: () => {},
@@ -87,11 +69,17 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const addPlaylist = (name: string) => {
     const newPlaylist: IPlaylist = {
-      id: playlists.length + 1,
+      id: Date.now(),
       name: name,
       cards: [],
     };
     setPlaylists([...playlists, newPlaylist]);
+  };
+
+  const removePlaylist = (playlistId: number) => {
+    setPlaylists((prevPlaylists) =>
+      prevPlaylists.filter((playlist) => playlist.id !== playlistId)
+    );
   };
 
   const addToPlaylist = (card: ICard, playlistId: number) => {
@@ -143,6 +131,13 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   useEffect(() => {
+    const storedPlaylists = localStorage.getItem("playlists");
+    if (storedPlaylists) {
+      setPlaylists(JSON.parse(storedPlaylists));
+    }
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem("playlists", JSON.stringify(playlists));
   }, [playlists]);
 
@@ -152,12 +147,12 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
         apiChartTrack,
         favList,
         addPlaylist,
+        removePlaylist,
         addFavorite,
         removeFavorite,
         playlists,
         addToPlaylist,
         removeFromPlaylist,
-
         statusTrack,
       }}
     >

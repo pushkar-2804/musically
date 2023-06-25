@@ -31,3 +31,25 @@ export type ICard {
       }[];
     };
   };
+
+
+
+  export interface ApiData {
+    title: string;
+    subtitle: string;
+    type: string;
+    url: string;
+    images: {
+      background: string;
+      coverart: string;
+      coverarthq: string;
+      joecolor: string;
+    };
+    hub: {};
+    artists: {}[];
+    highlights: {};
+    layout: string;
+    key: string;
+    properties: {};
+    share: {};
+  }
