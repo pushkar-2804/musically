@@ -1,6 +1,6 @@
 import React from "react";
 import "./ArtistCard.css";
-import Play from "../Play";
+import Play from "../Play/Play";
 
 export interface IArtistCard {
   id: number;

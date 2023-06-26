@@ -1,5 +1,5 @@
 import { tracksProps } from "../../constants";
-import Card from "../Card";
+import Card from "../Card/Card";
 
 type searchedProps = {
   tracks: tracksProps;

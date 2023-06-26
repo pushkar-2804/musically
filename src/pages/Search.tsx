@@ -9,7 +9,7 @@ import {
   optionsSearchKeyword,
   tracksProps,
 } from "../constants";
-import Skeleton from "../components/Skeleton";
+import Skeleton from "../components/Skeleton/Skeleton";
 
 export type apiDataProps = artistProps & tracksProps;
 

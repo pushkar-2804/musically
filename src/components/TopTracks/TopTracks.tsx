@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import "./TopTracks.css";
 import { ApiContext } from "../../utils/ApiContext";
-import Card from "../Card";
-import Skeleton from "../Skeleton";
+import Card from "../Card/Card";
+import Skeleton from "../Skeleton/Skeleton";
 
 const TopTracks = () => {
   const { apiChartTrack, statusTrack } = useContext(ApiContext);

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Card from "../Card";
+import Card from "../Card/Card";
 import { useContext } from "react";
 import { ApiContext } from "../../utils/ApiContext";
 import { fetchSongDetails, formatCardData } from "../../utils/FetchCardDetails";
-import Skeleton from "../Skeleton";
+import Skeleton from "../Skeleton/Skeleton";
 import { ICard } from "../../constants";
 
 interface PlaylistCardsProps {

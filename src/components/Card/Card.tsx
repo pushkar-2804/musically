@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./styles.css";
-import Play from "../Play";
-import Heart from "../Heart";
+import "./Card.css";
+import Play from "../Play/Play";
+import Heart from "../Heart/Heart";
 import { ApiContext } from "../../utils/ApiContext";
 import ThreeDotMenu from "../ThreeDotMenu/ThreeDotMenu";
 import { ICard } from "../../constants/index";
