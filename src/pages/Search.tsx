@@ -10,6 +10,7 @@ import {
   tracksProps,
 } from "../constants";
 import Skeleton from "../components/Skeleton";
+import NavModal from "../components/NavModal/NavModal";
 
 export type apiDataProps = artistProps & tracksProps;
 
@@ -61,9 +62,10 @@ const Search = () => {
   useEffect(() => console.log(loading), [loading]);
 
   return (
-    <div>
-      <div>
-        <span className="m-2">Search</span>
+    <div className="searchWrap">
+      <NavModal />
+      <div className="mt-4">
+        <h5 className="m-2">Search</h5>
         <div className="input-group mb-3">
           <input
             type="text"

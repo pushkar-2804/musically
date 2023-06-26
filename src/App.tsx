@@ -6,6 +6,7 @@ import Search from "./pages/Search";
 import { ApiProvider } from "./utils/ApiContext";
 import Favourites from "./pages/Favourites";
 import PlayListsPage from "./pages/PlayListsPage";
+import Navigation from "./components/Navigation/Navigation";
 // import Auth from "./pages/Auth";
 // import { useState } from "react";
 // import MyContext, { dataProp } from "./context";
