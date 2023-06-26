@@ -9,7 +9,7 @@ export const optionsChartTrack = {
       startFrom: "0",
     },
     headers: {
-      'X-RapidAPI-Key': 'a445dbc7afmsh5c661eb64a62627p16dc21jsnd91fd32493e0',
+      'X-RapidAPI-Key': '611ef863f3mshe0bbfd9f0937915p1ab9aejsn5bfbfe23b41e',
       'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
     }
   };
@@ -20,7 +20,7 @@ export const optionsFetchSong = (cardId:number)=> {return({
       key: `${cardId}`
     },
     headers: {
-      'X-RapidAPI-Key': 'a445dbc7afmsh5c661eb64a62627p16dc21jsnd91fd32493e0',
+      'X-RapidAPI-Key': '611ef863f3mshe0bbfd9f0937915p1ab9aejsn5bfbfe23b41e',
       'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
     }
   })};
@@ -32,9 +32,8 @@ export const optionsAutoComplete =(inputValue: string)=> {
   url: "https://shazam.p.rapidapi.com/auto-complete",
   params: { term: inputValue },
   headers: {
-    "X-RapidAPI-Key":
-      "a445dbc7afmsh5c661eb64a62627p16dc21jsnd91fd32493e0",
-    "X-RapidAPI-Host": "shazam.p.rapidapi.com",
+    'X-RapidAPI-Key': '611ef863f3mshe0bbfd9f0937915p1ab9aejsn5bfbfe23b41e',
+    'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
   }});
 };
 
@@ -44,8 +43,7 @@ export const optionsSearchKeyword =(keyword: string)=> {
   url: "https://shazam.p.rapidapi.com/search",
   params: { term: keyword },
   headers: {
-    "X-RapidAPI-Key":
-      "a445dbc7afmsh5c661eb64a62627p16dc21jsnd91fd32493e0",
-    "X-RapidAPI-Host": "shazam.p.rapidapi.com",
+    'X-RapidAPI-Key': '611ef863f3mshe0bbfd9f0937915p1ab9aejsn5bfbfe23b41e',
+    'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
   }});
 };

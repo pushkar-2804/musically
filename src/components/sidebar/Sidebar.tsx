@@ -1,20 +1,20 @@
 import { menuItems } from "../../constants/index";
+import KeyCloakService from "../../security/KeyCloakService";
 import "./Sidebar.css";
 
-import { Link, useNavigate } from "react-router-dom";
-import { keycloak } from "../../pages/Auth";
+import { Link } from "react-router-dom";
+// import { keycloak } from "../../pages/Auth";
 
 const Sidebar = () => {
-  const nav = useNavigate();
+  //   const nav = useNavigate();
   const logout = () => {
-    keycloak.clearToken();
-    keycloak.logout;
-    nav("/");
+    KeyCloakService.CallLogout();
   };
   return (
     <aside className="sidebar">
       <nav className="menu">
         <ul className="menu__list">
+          <li className="list-item">Welcome {KeyCloakService.GetUserName()}</li>
           {menuItems?.map((item, index) => {
             return (
               <li key={index}>
