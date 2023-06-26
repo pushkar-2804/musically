@@ -1,5 +1,8 @@
-# spotifyClone
-![Screenshot (11)](https://github.com/pushkar-2804/spotifyClone/assets/104600849/e4d4359f-7eb2-4d72-9d55-54fd2b0da865)
-![Screenshot (15)](https://github.com/pushkar-2804/spotifyClone/assets/104600849/ccf74bdc-9acd-4f42-b5a1-6b0601f86744)
-![Screenshot (17)](https://github.com/pushkar-2804/spotifyClone/assets/104600849/2b26ffb2-1572-4520-8632-944f8d0fd58c)
-![Screenshot (16)](https://github.com/pushkar-2804/spotifyClone/assets/104600849/547346a0-2f67-434d-a680-004f95a51b79)
+# Musically
+
+![Screenshot (11)](https://github.com/pushkar-2804/musically/assets/104600849/2691ec76-dfb4-4779-81d4-7ca46a024850)
+![Screenshot (15)](https://github.com/pushkar-2804/musically/assets/104600849/9bc82196-d428-4b28-ad21-e40920c1d4e6)
+![Screenshot (17)](https://github.com/pushkar-2804/musically/assets/104600849/c31e139c-b23c-46a0-8f01-2b6fe94986cb)
+![Screenshot (16)](https://github.com/pushkar-2804/musically/assets/104600849/dc945fae-33c9-4515-a667-3b44e54bb5e5)
+
+
