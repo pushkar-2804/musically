@@ -1,12 +1,17 @@
 import { tracksProps } from "../../constants";
 import Card from "../Card";
 
-const SearchedResults = (props: tracksProps) => {
+type searchedProps = {
+  tracks: tracksProps;
+  keyword: string;
+};
+
+const SearchedResults: React.FC<searchedProps> = ({ tracks, keyword }) => {
   return (
     <div className="rplayed">
-      <h3 className="subtitle"> Searched results.. </h3>
+      <h3 className="subtitle"> Searched results for {keyword} </h3>
       <div className="rplayed__grid">
-        {props.tracks?.hits?.map((hit) => {
+        {tracks.tracks?.hits?.map((hit) => {
           return (
             <Card
               id={Number(hit.track.key)}

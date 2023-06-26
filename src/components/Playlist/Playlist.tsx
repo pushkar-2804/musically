@@ -22,7 +22,11 @@ const Playlist: React.FC<PlaylistProps> = ({ playlistId, length }) => {
   return (
     <div className="rplayed">
       <h3 className="subtitle">{playlist.name}</h3>
-      <PlaylistCards cards={playlist.cards} />
+      {playlist.cards.length ? (
+        <PlaylistCards cards={playlist.cards} />
+      ) : (
+        <div>No songs added yet</div>
+      )}
     </div>
   );
 };

@@ -13,8 +13,8 @@ const Sidebar = () => {
   return (
     <aside className="sidebar">
       <nav className="menu">
+        <div className="userName">Welcome {KeyCloakService.GetUserName()}</div>
         <ul className="menu__list">
-          <li className="list-item">Welcome {KeyCloakService.GetUserName()}</li>
           {menuItems?.map((item, index) => {
             return (
               <li key={index}>

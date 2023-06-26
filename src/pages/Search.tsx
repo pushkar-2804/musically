@@ -23,8 +23,10 @@ const Search = () => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
+
   useEffect(() => {
     if (keyword !== "") {
+      // setInputValue(keyword);
       setViewSuggestion(false);
       setLoading(true);
       const searchKeyword = async () => {
@@ -97,7 +99,7 @@ const Search = () => {
 
       {!viewSuggestion && !loading && (
         <div>
-          <SearchedResults tracks={apiData.tracks} />
+          <SearchedResults tracks={apiData} keyword={keyword} />
           <Artists artists={apiData.artists} />
         </div>
       )}

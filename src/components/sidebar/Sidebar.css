@@ -17,6 +17,11 @@
   max-width: 30px;
   padding: 0;
 } */
+
+.userName{
+  padding: 18px 20px;
+  text-align: center;
+}
 .menu__list {
   padding-left: 0;
   list-style: none;
