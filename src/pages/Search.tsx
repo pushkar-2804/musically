@@ -10,7 +10,6 @@ import {
   tracksProps,
 } from "../constants";
 import Skeleton from "../components/Skeleton";
-import NavModal from "../components/NavModal/NavModal";
 
 export type apiDataProps = artistProps & tracksProps;
 
@@ -33,7 +32,6 @@ const Search = () => {
       const searchKeyword = async () => {
         try {
           const response = await axios.request(optionsSearchKeyword(keyword));
-          console.log(response.data);
           setApiData(response.data);
           setLoading(false);
         } catch (error) {
@@ -49,7 +47,6 @@ const Search = () => {
     const fetchData = async () => {
       try {
         const response = await axios.request(optionsAutoComplete(inputValue));
-        console.log(response.data.hints);
         setApiSuggestionData(response.data.hints);
       } catch (error) {
         console.error(error);
@@ -59,11 +56,8 @@ const Search = () => {
     fetchData();
   }, [inputValue]);
 
-  useEffect(() => console.log(loading), [loading]);
-
   return (
-    <div className="searchWrap">
-      <NavModal />
+    <div className="wrap">
       <div className="mt-4">
         <h5 className="m-2">Search</h5>
         <div className="input-group mb-3">

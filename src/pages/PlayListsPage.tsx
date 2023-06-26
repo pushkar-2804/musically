@@ -3,7 +3,6 @@ import { ApiContext } from "../utils/ApiContext";
 import Playlist from "../components/Playlist/Playlist";
 import deleteIcon from "../assets/Delete.svg";
 import ModalCreatePlaylist from "../components/ModalCreatePlaylist/ModalCreatePlaylist";
-import NavModal from "../components/NavModal/NavModal";
 
 const PlayListsPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,8 +15,6 @@ const PlayListsPage = () => {
 
   return (
     <div className="wrap">
-      {" "}
-      <NavModal />
       <div className="rplayed">
         <h3 className="subtitle"> Playlists </h3>
         <div className="rplayed__grid">

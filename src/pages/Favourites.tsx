@@ -1,5 +1,4 @@
 import Card from "../components/Card";
-import NavModal from "../components/NavModal/NavModal";
 import { ApiContext } from "../utils/ApiContext";
 import { useContext } from "react";
 
@@ -7,7 +6,6 @@ const Favourites = () => {
   const { favList } = useContext(ApiContext);
   return (
     <>
-      <NavModal />
       <section className="rplayed">
         <h2 className="subtitle">Favourites</h2>
         <div className="rplayed__grid">

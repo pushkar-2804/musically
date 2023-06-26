@@ -7,6 +7,7 @@ import { ApiProvider } from "./utils/ApiContext";
 import Favourites from "./pages/Favourites";
 import PlayListsPage from "./pages/PlayListsPage";
 import Navigation from "./components/Navigation/Navigation";
+import NavModal from "./components/NavModal/NavModal";
 // import Auth from "./pages/Auth";
 // import { useState } from "react";
 // import MyContext, { dataProp } from "./context";
@@ -21,6 +22,7 @@ const App = () => {
     <div className="app">
       <Sidebar />
       <main className="main">
+        <NavModal />
         <ApiProvider>
           <Routes>
             {/* <Route path="/album/:id">
