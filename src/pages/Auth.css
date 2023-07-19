@@ -14,6 +14,7 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+    border-radius: 20px;
 }
 .login button {
     width: fit-content;
