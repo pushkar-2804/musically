@@ -1,12 +1,22 @@
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { menuItems } from "../../constants";
-import KeyCloakService from "../../security/KeyCloakService";
+import firebase from "../../security/firebase";
+
+// import KeyCloakService from "../../security/KeyCloakService";
 import { useState } from "react";
 
 function NavModal() {
   const logout = () => {
-    KeyCloakService.CallLogout();
+    // KeyCloakService.CallLogout();
+    firebase
+      .auth()
+      .signOut()
+      .catch((error) => {
+        // Handle sign-out errors if needed
+        console.error(error);
+      });
+    console.log("Logout");
   };
   const [expanded, setExpanded] = useState(false);
 

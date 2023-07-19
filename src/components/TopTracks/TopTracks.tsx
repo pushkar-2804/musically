@@ -17,12 +17,12 @@ const TopTracks = () => {
               // setLoading(false);
               return (
                 <Card
-                  key={data.key}
-                  title={data.title}
-                  id={Number(data.key)}
-                  artist={data.subtitle}
-                  url={data.url}
-                  thumbnail={data.images.background}
+                  key={data?.key}
+                  title={data?.title}
+                  id={Number(data?.key)}
+                  artist={data?.subtitle}
+                  url={data?.url}
+                  thumbnail={data?.images?.background}
                   isFavorite
                 />
               );

@@ -1,19 +1,28 @@
 import { menuItems } from "../../constants/index";
-import KeyCloakService from "../../security/KeyCloakService";
 import "./Sidebar.css";
-
+import firebase from "../../security/firebase";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../security/AuthProvider";
+import { useContext } from "react";
 // import { keycloak } from "../../pages/Auth";
 
 const Sidebar = () => {
   //   const nav = useNavigate();
+  const { currentUser } = useContext(AuthContext);
   const logout = () => {
-    KeyCloakService.CallLogout();
+    console.log("logged out");
+    firebase
+      .auth()
+      .signOut()
+      .catch((error) => {
+        // Handle sign-out errors if needed
+        console.error(error);
+      });
   };
   return (
     <aside className="sidebar">
       <nav className="menu">
-        <div className="userName">Welcome {KeyCloakService.GetUserName()}</div>
+        <div className="userName">Welcome {currentUser?.displayName}</div>
         <ul className="menu__list">
           {menuItems?.map((item, index) => {
             return (
