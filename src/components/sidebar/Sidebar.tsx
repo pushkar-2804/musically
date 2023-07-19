@@ -1,6 +1,6 @@
 import { menuItems } from "../../constants/index";
 import "./Sidebar.css";
-import firebase from "../../security/firebase";
+import { auth } from "../../security/firebase";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../security/AuthProvider";
 import { useContext } from "react";
@@ -11,13 +11,10 @@ const Sidebar = () => {
   const { currentUser } = useContext(AuthContext);
   const logout = () => {
     console.log("logged out");
-    firebase
-      .auth()
-      .signOut()
-      .catch((error) => {
-        // Handle sign-out errors if needed
-        console.error(error);
-      });
+    auth.signOut().catch((error) => {
+      // Handle sign-out errors if needed
+      console.error(error);
+    });
   };
   return (
     <aside className="sidebar">

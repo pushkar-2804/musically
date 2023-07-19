@@ -1,5 +1,6 @@
 import "./Auth.css";
 import googleImg from "../assets/google.png";
+import { auth } from "../security/firebase";
 import firebase from "../security/firebase";
 
 const Auth = () => {
@@ -8,13 +9,11 @@ const Auth = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
 
     // Sign in with Google using a popup window
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .catch((error) => {
-        // Handle sign-in errors if needed
-        console.error(error);
-      });
+
+    auth.signInWithPopup(provider).catch((error) => {
+      // Handle sign-in errors if needed
+      console.error(error);
+    });
   };
   return (
     <div className="background">
