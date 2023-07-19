@@ -54,6 +54,69 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   const [playlists, setPlaylists] = useState<IPlaylist[]>(initialPlaylists);
   const [statusTrack, setStatusTrack] = useState<Status>("loading");
 
+  // Function to post favorites to the API
+  const postFavoritesToApi = async () => {
+    try {
+      await axios.post("/api/favorites", { favList });
+    } catch (error) {
+      console.error("Error posting favorites to API:", error);
+    }
+  };
+
+  // Function to post playlists to the API
+  const postPlaylistsToApi = async () => {
+    try {
+      await axios.post("/api/playlists", { playlists });
+    } catch (error) {
+      console.error("Error posting playlists to API:", error);
+    }
+  };
+
+  // Function to fetch favorites from the API
+  const fetchFavoritesFromApi = async () => {
+    try {
+      const favoritesResponse = await axios.get("/api/favorites");
+      setFavList(favoritesResponse.data);
+      localStorage.setItem("favList", JSON.stringify(favoritesResponse.data));
+    } catch (error) {
+      console.error("Error fetching favorites from API:", error);
+    }
+  };
+
+  // Function to fetch playlists from the API
+  const fetchPlaylistsFromApi = async () => {
+    try {
+      const playlistsResponse = await axios.get("/api/playlists");
+      setPlaylists(playlistsResponse.data);
+      localStorage.setItem("playlists", JSON.stringify(playlistsResponse.data));
+    } catch (error) {
+      console.error("Error fetching playlists from API:", error);
+    }
+  };
+
+  // UseEffect to post favorites and playlists to the API whenever they change
+  useEffect(() => {
+    postFavoritesToApi();
+  }, [favList]);
+
+  useEffect(() => {
+    postPlaylistsToApi();
+  }, [playlists]);
+
+  // UseEffect to fetch favorites and playlists from the API during initial load if local storage is empty or outdated
+  useEffect(() => {
+    const storedFavList = localStorage.getItem("favList");
+    const storedPlaylists = localStorage.getItem("playlists");
+
+    if (!storedFavList) {
+      fetchFavoritesFromApi();
+    }
+
+    if (!storedPlaylists) {
+      fetchPlaylistsFromApi();
+    }
+  }, []);
+
   const addFavorite = (card: ICard) => {
     const isCardAlreadyFavorite = favList.some(
       (favCard) => favCard.id === card.id
