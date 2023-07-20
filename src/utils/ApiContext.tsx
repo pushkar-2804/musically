@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ICard, optionsChartTrack } from "../constants/index";
 import { ApiData } from "../constants/interface";
-import AuthProvider, { AuthContext } from "../security/AuthProvider";
+import { AuthContext } from "../security/AuthProvider";
 
 export interface IPlaylist {
   id: number;
