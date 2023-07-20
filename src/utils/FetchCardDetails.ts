@@ -15,7 +15,7 @@ import { ICard } from "../constants";
 
 export const fetchSongDetails = async (cardId: number) => {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_URL_NODE}/api/cards/${cardId}`);
+    const response = await axios.get(`${import.meta.env.VITE_URL_NODE}/cards/${cardId}`);
     return response.data;
 
   } catch (error) {
@@ -42,7 +42,7 @@ export  const formatCardData = (data: any): ICard => {
 
 export const postCardDetailsToApi = async (cardId: number, cardDetails: ICard) => {
   try {
-    await axios.post(`${import.meta.env.VITE_URL_NODE}/api/cards`, {
+    await axios.post(`${import.meta.env.VITE_URL_NODE}/cards`, {
       cardId: cardId,
       cardDetails: cardDetails,
     });
