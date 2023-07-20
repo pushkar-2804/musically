@@ -48,7 +48,7 @@ const Card: React.FC<ICard> = ({
 
   const isCardInPlaylist = (playlistId: number) => {
     const playlist = playlists.find((p) => p.id === playlistId);
-    return playlist?.cards.includes(card.id) || false;
+    return playlist?.cards.map(String).includes(String(id)) || false;
   };
 
   return (

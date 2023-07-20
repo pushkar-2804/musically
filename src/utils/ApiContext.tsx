@@ -7,7 +7,7 @@ import { AuthContext } from "../security/AuthProvider";
 export interface IPlaylist {
   id: number;
   name: string;
-  cards: number[];
+  cards: ICard[];
 }
 
 interface ApiContextType {
@@ -156,10 +156,13 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   const addToPlaylist = (card: ICard, playlistId: number) => {
     setPlaylists((prevPlaylists) => {
       return prevPlaylists.map((playlist) => {
-        if (playlist.id === playlistId && !playlist.cards.includes(card.id)) {
+        if (
+          playlist.id === playlistId &&
+          !playlist.cards.some((c) => c.id === card.id)
+        ) {
           return {
             ...playlist,
-            cards: [...playlist.cards, card.id],
+            cards: [...playlist.cards, card],
           };
         }
         return playlist;
@@ -170,10 +173,13 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   const removeFromPlaylist = (card: ICard, playlistId: number) => {
     setPlaylists((prevPlaylists) => {
       return prevPlaylists.map((playlist) => {
-        if (playlist.id === playlistId && playlist.cards.includes(card.id)) {
+        if (
+          playlist.id === playlistId &&
+          playlist.cards.some((c) => c.id === card.id)
+        ) {
           return {
             ...playlist,
-            cards: playlist.cards.filter((cardId) => cardId !== card.id),
+            cards: playlist.cards.filter((c) => c.id !== card.id),
           };
         }
         return playlist;
