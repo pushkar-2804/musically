@@ -5,6 +5,7 @@ import { ApiContext } from "../../utils/ApiContext";
 import { fetchSongDetails, formatCardData } from "../../utils/FetchCardDetails";
 import Skeleton from "../Skeleton/Skeleton";
 import { ICard } from "../../constants";
+import axios from "axios";
 
 interface PlaylistCardsProps {
   cards: number[];
