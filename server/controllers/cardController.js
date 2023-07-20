@@ -3,16 +3,17 @@ const Card = require("../models/Card");
 
 const addOrUpdateCard = async (req, res) => {
   try {
-    const { cardId, cardDetails } = req.body;
+    const { cardDetails } = req.body;
 
     // Find the card in the database by its ID
-    let card = await Card.findOne({ id: cardId });
+    let card = await Card.findOne({ id: cardDetails.id });
 
     if (!card) {
       // If the card does not exist, create a new card
       card = new Card(cardDetails);
     } else {
       // If the card exists, update its properties
+      card.id = cardDetails.id;
       card.title = cardDetails.title;
       card.artist = cardDetails.artist;
       card.thumbnail = cardDetails.thumbnail;

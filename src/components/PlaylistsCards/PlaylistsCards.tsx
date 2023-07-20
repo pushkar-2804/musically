@@ -42,7 +42,7 @@ const PlaylistCards: React.FC<PlaylistCardsProps> = ({ cards }) => {
     if (existingCard) {
       const formattedCardData = formatCardData(existingCard);
       storeCardDetails(cardId, formattedCardData);
-      postCardDetailsToApi(cardId, formattedCardData); // Post card details to the API
+      postCardDetailsToApi(formattedCardData); // Post card details to the API
       return formatCardData(existingCard);
     }
     const storedCardData = localStorage.getItem(`card_${cardId}`);
@@ -55,7 +55,7 @@ const PlaylistCards: React.FC<PlaylistCardsProps> = ({ cards }) => {
       const cardDetails = await fetchSongDetails(cardId);
       if (cardDetails) {
         storeCardDetails(cardId, cardDetails);
-        postCardDetailsToApi(cardId, cardDetails); // Post card details to the API
+        postCardDetailsToApi(cardDetails); // Post card details to the API
         return cardDetails;
       }
     } catch (error) {

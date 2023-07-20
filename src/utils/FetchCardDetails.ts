@@ -40,10 +40,9 @@ export  const formatCardData = (data: any): ICard => {
   };
   
 
-export const postCardDetailsToApi = async (cardId: number, cardDetails: ICard) => {
+export const postCardDetailsToApi = async (cardDetails: ICard) => {
   try {
     await axios.post(`${import.meta.env.VITE_URL_NODE}/cards`, {
-      cardId: cardId,
       cardDetails: cardDetails,
     });
   } catch (error) {
