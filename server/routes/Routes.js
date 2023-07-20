@@ -7,6 +7,11 @@ const {
   getFavListByUserId,
 } = require("../controllers/UserController");
 
+const {
+  addOrUpdateCard,
+  getCardById,
+} = require("../controllers/cardController");
+
 // Route to add or update playlists and/or favList for a user
 router.post("/user/lists", addOrUpdateLists);
 
@@ -15,5 +20,11 @@ router.get("/user/playlists/:userId", getPlaylistsByUserId);
 
 // Route to get favList for a user
 router.get("/user/favlist/:userId", getFavListByUserId);
+
+// Route to add or update a card
+router.post("/cards", addOrUpdateCard);
+
+// Route to get a card by ID
+router.get("/cards/:cardId", getCardById);
 
 module.exports = router;
