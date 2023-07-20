@@ -38,18 +38,36 @@ const Card: React.FC<ICard> = ({
     }
   };
 
+  // Update the isCardInPlaylist function to return an array of playlistIds
+  const getPlaylistsWithCard = (): number[] => {
+    const playlistIds: number[] = [];
+    playlists.forEach((playlist) => {
+      if (playlist.cards.some((c) => c.id === card.id)) {
+        playlistIds.push(playlist.id);
+      }
+    });
+    return playlistIds;
+  };
+
+  const [activePlaylistIds, setActivePlaylistIds] = useState<number[]>([]);
+
   const handlePlaylistClick = (playlistId: number) => {
     if (isCardInPlaylist(playlistId)) {
       removeFromPlaylist(card, playlistId);
     } else {
       addToPlaylist(card, playlistId);
     }
+    setActivePlaylistIds(getPlaylistsWithCard());
   };
 
   const isCardInPlaylist = (playlistId: number) => {
     const playlist = playlists.find((p) => p.id === playlistId);
-    return playlist?.cards.includes(card.id) || false;
+    return playlist?.cards.some((c) => c.id === card.id) || false;
   };
+
+  useEffect(() => {
+    setActivePlaylistIds(getPlaylistsWithCard());
+  }, []);
 
   return (
     <div className="card">
@@ -73,7 +91,7 @@ const Card: React.FC<ICard> = ({
           <ThreeDotMenu
             playlists={playlists}
             onPlaylistClick={handlePlaylistClick}
-            isCardInPlaylist={isCardInPlaylist}
+            activePlaylistIds={activePlaylistIds} // Pass the activePlaylistIds prop
           />
         </div>
       </div>

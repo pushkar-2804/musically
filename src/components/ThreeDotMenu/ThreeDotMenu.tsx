@@ -6,19 +6,20 @@ import "./ThreeDotMenu.css";
 interface ThreeDotMenuProps {
   playlists: IPlaylist[];
   onPlaylistClick: (playlistId: number) => void;
-  isCardInPlaylist: (playlistId: number) => boolean;
+  activePlaylistIds: number[]; // Add activePlaylistIds prop
 }
 
 const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
   playlists,
   onPlaylistClick,
-  isCardInPlaylist,
+  activePlaylistIds,
 }) => {
   const [playlistsAvailable, setPlaylistsAvailable] = useState(false);
 
   useEffect(() => {
     if (playlists?.length) setPlaylistsAvailable(true);
   }, [playlists]);
+
   return (
     <DropdownButton id="dropdown-menu" title="" className="dropdown-with-dots">
       {playlistsAvailable ? (
@@ -29,7 +30,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
             <Dropdown.Item
               key={playlist.id}
               onClick={() => onPlaylistClick(playlist.id)}
-              active={isCardInPlaylist(playlist.id)}
+              active={activePlaylistIds.includes(playlist.id)} // Set the active state based on activePlaylistIds
             >
               {playlist.name}
             </Dropdown.Item>

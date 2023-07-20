@@ -5,6 +5,7 @@ import firebase from "../../security/firebase";
 
 // import KeyCloakService from "../../security/KeyCloakService";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function NavModal() {
   const logout = () => {
@@ -40,9 +41,14 @@ function NavModal() {
         <Nav className="mr-auto">
           {menuItems?.map((item, index) => {
             return (
-              <Nav.Link href={item.route} key={index}>
-                {item.name}
-              </Nav.Link>
+              <Link
+                to={item.route}
+                key={index}
+                className="list-item-mobile"
+                onClick={handleNavToggle}
+              >
+                <span>{item.name}</span>
+              </Link>
             );
           })}
         </Nav>

@@ -18,10 +18,10 @@ const Auth = () => {
   return (
     <div className="background">
       <div className="login">
-        <h1>Welcome to MusicallyMusic</h1> Please Login to continue
+        <h1>Welcome to Musically</h1> Please SignIn to continue
         <button onClick={handleSignInWithGoogle}>
           <img src={googleImg} width="40px" />
-          Signin With Google
+          SignIn With Google
         </button>
       </div>
     </div>

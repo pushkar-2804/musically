@@ -20,3 +20,15 @@
     width: fit-content;
     margin: 20px auto;
 }
+
+
+@media screen and (max-width: 768px) {
+    .login{
+        width: 70%;
+    }
+}
+@media screen and (max-width: 510px) {
+    .login{
+        width: 90%;
+    }
+}
