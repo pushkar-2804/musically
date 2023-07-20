@@ -38,20 +38,24 @@ const Card: React.FC<ICard> = ({
     }
   };
 
+  // Update the isCardInPlaylist function to return the playlistId
+  const isCardInPlaylist = (): number | null => {
+    const playlistWithCard = playlists.find((playlist) =>
+      playlist.cards.some((c) => c.id === card.id)
+    );
+    return playlistWithCard ? playlistWithCard.id : null;
+  };
+
   const [activePlaylistId, setActivePlaylistId] = useState<number | null>(null);
 
   const handlePlaylistClick = (playlistId: number) => {
-    if (isCardInPlaylist(playlistId)) {
+    if (isCardInPlaylist() === playlistId) {
       removeFromPlaylist(card, playlistId);
+      setActivePlaylistId(null);
     } else {
       addToPlaylist(card, playlistId);
+      setActivePlaylistId(playlistId);
     }
-    setActivePlaylistId(playlistId);
-  };
-
-  const isCardInPlaylist = (playlistId: number) => {
-    const playlist = playlists.find((p) => p.id === playlistId);
-    return playlist?.cards.some((c) => c.id === card.id) || false;
   };
 
   return (

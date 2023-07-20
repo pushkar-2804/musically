@@ -6,7 +6,7 @@ import "./ThreeDotMenu.css";
 interface ThreeDotMenuProps {
   playlists: IPlaylist[];
   onPlaylistClick: (playlistId: number) => void;
-  activePlaylistId: number | null; // Array of active playlist IDs
+  activePlaylistId: number | null; // Add activePlaylistId prop
 }
 
 const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
@@ -30,7 +30,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
             <Dropdown.Item
               key={playlist.id}
               onClick={() => onPlaylistClick(playlist.id)}
-              active={activePlaylistId === playlist.id} // Highlight the playlist if its ID matches the activePlaylistId
+              active={activePlaylistId === playlist.id} // Set the active state based on activePlaylistId
             >
               {playlist.name}
             </Dropdown.Item>
