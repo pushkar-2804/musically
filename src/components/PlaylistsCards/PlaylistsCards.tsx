@@ -14,7 +14,7 @@ const PlaylistCards: React.FC<PlaylistCardsProps> = ({ cards }) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 2000); // Simulating loading time for demo purposes
+    }, 500); // Simulating loading time for demo purposes
   }, [cards]);
 
   return (
