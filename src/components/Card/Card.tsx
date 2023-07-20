@@ -41,14 +41,12 @@ const Card: React.FC<ICard> = ({
   const [activePlaylistId, setActivePlaylistId] = useState<number | null>(null);
 
   const handlePlaylistClick = (playlistId: number) => {
-    setActivePlaylistId((prevId) =>
-      prevId === playlistId ? null : playlistId
-    );
     if (isCardInPlaylist(playlistId)) {
       removeFromPlaylist(card, playlistId);
     } else {
       addToPlaylist(card, playlistId);
     }
+    setActivePlaylistId(playlistId);
   };
 
   const isCardInPlaylist = (playlistId: number) => {
@@ -78,7 +76,7 @@ const Card: React.FC<ICard> = ({
           <ThreeDotMenu
             playlists={playlists}
             onPlaylistClick={handlePlaylistClick}
-            activePlaylistId={activePlaylistId}
+            activePlaylistId={activePlaylistId} // Pass the activePlaylistId prop
           />
         </div>
       </div>
