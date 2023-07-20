@@ -83,6 +83,11 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
       setFavList(favoritesResponse.data);
     } catch (error) {
       console.error("Error fetching favorites from API:", error);
+      // Fallback: Retrieve favorites from local storage if available
+      const storedFavList = localStorage.getItem("favList");
+      if (storedFavList) {
+        setFavList(JSON.parse(storedFavList));
+      }
     }
   };
 
@@ -95,6 +100,11 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
       setPlaylists(playlistsResponse.data);
     } catch (error) {
       console.error("Error fetching playlists from API:", error);
+      // Fallback: Retrieve playlists from local storage if available
+      const storedPlaylists = localStorage.getItem("playlists");
+      if (storedPlaylists) {
+        setPlaylists(JSON.parse(storedPlaylists));
+      }
     }
   };
 
@@ -183,6 +193,14 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
     };
     searchKeyword();
   }, []);
+
+  // UseEffect to fetch data from local storage when there is an error while fetching data from the API
+  useEffect(() => {
+    if (statusTrack === "error") {
+      fetchFavoritesFromApi();
+      fetchPlaylistsFromApi();
+    }
+  }, [statusTrack]);
 
   return (
     <ApiContext.Provider

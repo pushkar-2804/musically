@@ -43,6 +43,7 @@ const App = () => {
       ) : (
         <Routes>
           <Route path="/" element={<Auth />} />
+          <Route path="/*" element={<Auth />} />
         </Routes>
       )}
     </div>
