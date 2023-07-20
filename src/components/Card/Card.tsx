@@ -38,25 +38,36 @@ const Card: React.FC<ICard> = ({
     }
   };
 
-  // Update the isCardInPlaylist function to return the playlistId
-  const isCardInPlaylist = (): number | null => {
-    const playlistWithCard = playlists.find((playlist) =>
-      playlist.cards.some((c) => c.id === card.id)
-    );
-    return playlistWithCard ? playlistWithCard.id : null;
+  // Update the isCardInPlaylist function to return an array of playlistIds
+  const getPlaylistsWithCard = (): number[] => {
+    const playlistIds: number[] = [];
+    playlists.forEach((playlist) => {
+      if (playlist.cards.some((c) => c.id === card.id)) {
+        playlistIds.push(playlist.id);
+      }
+    });
+    return playlistIds;
   };
 
-  const [activePlaylistId, setActivePlaylistId] = useState<number | null>(null);
+  const [activePlaylistIds, setActivePlaylistIds] = useState<number[]>([]);
 
   const handlePlaylistClick = (playlistId: number) => {
-    if (isCardInPlaylist() === playlistId) {
+    if (isCardInPlaylist(playlistId)) {
       removeFromPlaylist(card, playlistId);
-      setActivePlaylistId(null);
     } else {
       addToPlaylist(card, playlistId);
-      setActivePlaylistId(playlistId);
     }
+    setActivePlaylistIds(getPlaylistsWithCard());
   };
+
+  const isCardInPlaylist = (playlistId: number) => {
+    const playlist = playlists.find((p) => p.id === playlistId);
+    return playlist?.cards.some((c) => c.id === card.id) || false;
+  };
+
+  useEffect(() => {
+    setActivePlaylistIds(getPlaylistsWithCard());
+  }, []);
 
   return (
     <div className="card">
@@ -80,7 +91,7 @@ const Card: React.FC<ICard> = ({
           <ThreeDotMenu
             playlists={playlists}
             onPlaylistClick={handlePlaylistClick}
-            activePlaylistId={activePlaylistId} // Pass the activePlaylistId prop
+            activePlaylistIds={activePlaylistIds} // Pass the activePlaylistIds prop
           />
         </div>
       </div>

@@ -6,13 +6,13 @@ import "./ThreeDotMenu.css";
 interface ThreeDotMenuProps {
   playlists: IPlaylist[];
   onPlaylistClick: (playlistId: number) => void;
-  activePlaylistId: number | null; // Add activePlaylistId prop
+  activePlaylistIds: number[]; // Add activePlaylistIds prop
 }
 
 const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
   playlists,
   onPlaylistClick,
-  activePlaylistId,
+  activePlaylistIds,
 }) => {
   const [playlistsAvailable, setPlaylistsAvailable] = useState(false);
 
@@ -30,7 +30,7 @@ const ThreeDotMenu: React.FC<ThreeDotMenuProps> = ({
             <Dropdown.Item
               key={playlist.id}
               onClick={() => onPlaylistClick(playlist.id)}
-              active={activePlaylistId === playlist.id} // Set the active state based on activePlaylistId
+              active={activePlaylistIds.includes(playlist.id)} // Set the active state based on activePlaylistIds
             >
               {playlist.name}
             </Dropdown.Item>
