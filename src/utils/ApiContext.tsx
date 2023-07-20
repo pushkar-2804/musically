@@ -1,7 +1,8 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ICard, optionsChartTrack } from "../constants/index";
 import { ApiData } from "../constants/interface";
+import AuthProvider, { AuthContext } from "../security/AuthProvider";
 
 export interface IPlaylist {
   id: number;
@@ -39,8 +40,11 @@ type Status = "loading" | "success" | "error";
 export const ApiContext = createContext<ApiContextType>(initialApiContext);
 
 export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
-  children
+  children,
 }) => {
+  const { currentUser } = useContext(AuthContext);
+  const userId = currentUser?.uid || "";
+
   const [apiChartTrack, setApiChartTrack] = useState<ApiData[]>([]);
   const [favList, setFavList] = useState<ICard[]>(() => {
     const storedFavList = localStorage.getItem("favList");
@@ -57,7 +61,7 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   // Function to post favorites to the API
   const postFavoritesToApi = async () => {
     try {
-      await axios.post("/api/favorites", { favList });
+      await axios.post("/user/lists", { userId, favList });
     } catch (error) {
       console.error("Error posting favorites to API:", error);
     }
@@ -66,7 +70,7 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   // Function to post playlists to the API
   const postPlaylistsToApi = async () => {
     try {
-      await axios.post("/api/playlists", { playlists });
+      await axios.post("/user/lists", { userId, playlists });
     } catch (error) {
       console.error("Error posting playlists to API:", error);
     }
@@ -75,7 +79,7 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   // Function to fetch favorites from the API
   const fetchFavoritesFromApi = async () => {
     try {
-      const favoritesResponse = await axios.get("/api/favorites");
+      const favoritesResponse = await axios.get(`/user/favlist/${userId}`);
       setFavList(favoritesResponse.data);
       localStorage.setItem("favList", JSON.stringify(favoritesResponse.data));
     } catch (error) {
@@ -86,7 +90,7 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   // Function to fetch playlists from the API
   const fetchPlaylistsFromApi = async () => {
     try {
-      const playlistsResponse = await axios.get("/api/playlists");
+      const playlistsResponse = await axios.get(`/user/playlists/${userId}`);
       setPlaylists(playlistsResponse.data);
       localStorage.setItem("playlists", JSON.stringify(playlistsResponse.data));
     } catch (error) {
