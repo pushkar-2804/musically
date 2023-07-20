@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import { useContext } from "react";
 import { ApiContext } from "../../utils/ApiContext";
-import { fetchSongDetails, formatCardData } from "../../utils/FetchCardDetails";
+import {
+  fetchSongDetails,
+  formatCardData,
+  postCardDetailsToApi,
+} from "../../utils/FetchCardDetails";
 import Skeleton from "../Skeleton/Skeleton";
 import { ICard } from "../../constants";
-import axios from "axios";
 
 interface PlaylistCardsProps {
   cards: number[];
@@ -30,17 +33,6 @@ const PlaylistCards: React.FC<PlaylistCardsProps> = ({ cards }) => {
 
   const storeCardDetails = (cardId: number, cardDetails: ICard) => {
     localStorage.setItem(`card_${cardId}`, JSON.stringify(cardDetails));
-  };
-
-  const postCardDetailsToApi = async (cardId: number, cardDetails: ICard) => {
-    try {
-      await axios.post(`${import.meta.env.VITE_URL_NODE}/api/cardDetails`, {
-        cardId: cardId,
-        cardDetails: cardDetails,
-      });
-    } catch (error) {
-      console.error("Error posting card details to API:", error);
-    }
   };
 
   const getCardDetails = async (cardId: number) => {
