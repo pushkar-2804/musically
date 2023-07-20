@@ -10,17 +10,17 @@ export const optionsChartTrack = {
       'X-RapidAPI-Host': `${import.meta.env.VITE_RAPIDHOST}`
     }
   };
-export const optionsFetchSong = (cardId:number)=> {return({
-    method: 'GET',    
-    url: `${import.meta.env.VITE_URL}/get-details`,
-    params: {
-      key: `${cardId}`
-    },
-    headers: {
-      'X-RapidAPI-Key': `${import.meta.env.VITE_RAPIDKEY}`,
-      'X-RapidAPI-Host': `${import.meta.env.VITE_RAPIDHOST}`
-    }
-  })};
+// export const optionsFetchSong = (cardId:number)=> {return({
+//     method: 'GET',    
+//     url: `${import.meta.env.VITE_URL}/get-details`,
+//     params: {
+//       key: `${cardId}`
+//     },
+//     headers: {
+//       'X-RapidAPI-Key': `${import.meta.env.VITE_RAPIDKEY}`,
+//       'X-RapidAPI-Host': `${import.meta.env.VITE_RAPIDHOST}`
+//     }
+//   })};
 
 
 export const optionsAutoComplete =(inputValue: string)=> {

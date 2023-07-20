@@ -46,16 +46,8 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   const userId = currentUser?.uid || "";
 
   const [apiChartTrack, setApiChartTrack] = useState<ApiData[]>([]);
-  const [favList, setFavList] = useState<ICard[]>(() => {
-    const storedFavList = localStorage.getItem("favList");
-    return storedFavList ? JSON.parse(storedFavList) : [];
-  });
-  const storedPlaylists = localStorage.getItem("playlists");
-  const initialPlaylists: IPlaylist[] = storedPlaylists
-    ? JSON.parse(storedPlaylists)
-    : [];
-
-  const [playlists, setPlaylists] = useState<IPlaylist[]>(initialPlaylists);
+  const [favList, setFavList] = useState<ICard[]>([]);
+  const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
   const [statusTrack, setStatusTrack] = useState<Status>("loading");
 
   // Function to post favorites to the API
@@ -89,7 +81,6 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
         `${import.meta.env.VITE_URL_NODE}/user/favlist/${userId}`
       );
       setFavList(favoritesResponse.data);
-      localStorage.setItem("favList", JSON.stringify(favoritesResponse.data));
     } catch (error) {
       console.error("Error fetching favorites from API:", error);
     }
@@ -102,7 +93,6 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
         `${import.meta.env.VITE_URL_NODE}/user/playlists/${userId}`
       );
       setPlaylists(playlistsResponse.data);
-      localStorage.setItem("playlists", JSON.stringify(playlistsResponse.data));
     } catch (error) {
       console.error("Error fetching playlists from API:", error);
     }
@@ -119,16 +109,8 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // UseEffect to fetch favorites and playlists from the API during initial load if local storage is empty or outdated
   useEffect(() => {
-    const storedFavList = localStorage.getItem("favList");
-    const storedPlaylists = localStorage.getItem("playlists");
-
-    if (!storedFavList) {
-      fetchFavoritesFromApi();
-    }
-
-    if (!storedPlaylists) {
-      fetchPlaylistsFromApi();
-    }
+    fetchFavoritesFromApi();
+    fetchPlaylistsFromApi();
   }, []);
 
   const addFavorite = (card: ICard) => {
@@ -188,11 +170,6 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
-    // Update local storage whenever favList changes
-    localStorage.setItem("favList", JSON.stringify(favList));
-  }, [favList]); // Run whenever favList changes
-
-  useEffect(() => {
     const searchKeyword = async () => {
       try {
         const response = await axios.request(optionsChartTrack);
@@ -206,17 +183,6 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
     };
     searchKeyword();
   }, []);
-
-  useEffect(() => {
-    const storedPlaylists = localStorage.getItem("playlists");
-    if (storedPlaylists) {
-      setPlaylists(JSON.parse(storedPlaylists));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("playlists", JSON.stringify(playlists));
-  }, [playlists]);
 
   return (
     <ApiContext.Provider

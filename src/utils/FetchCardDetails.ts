@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { optionsFetchSong } from "../constants/optionConfig";
+// import { optionsFetchSong } from "../constants/optionConfig";
 import { ICard } from "../constants";
 
 // export const fetchSongDetails = async (cardId: number) => {
@@ -15,9 +15,8 @@ import { ICard } from "../constants";
 
 export const fetchSongDetails = async (cardId: number) => {
   try {
-      const response = await axios.request(optionsFetchSong(cardId));      
-          
-      return formatCardData(response.data);
+    const response = await axios.get(`${import.meta.env.VITE_URL_NODE}/api/cardDetails/${cardId}`);
+    return response.data;
 
   } catch (error) {
     console.error("Error fetching song details:", error);

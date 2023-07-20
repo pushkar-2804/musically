@@ -27,8 +27,15 @@ const PlaylistCards: React.FC<PlaylistCardsProps> = ({ cards }) => {
     fetchCardDetails();
   }, [cards]);
 
-  const storeCardDetails = (cardId: number, cardDetails: ICard) => {
-    localStorage.setItem(`card_${cardId}`, JSON.stringify(cardDetails));
+  const postCardDetailsToApi = async (cardId: number, cardDetails: ICard) => {
+    try {
+      await axios.post("/api/cardDetails", {
+        cardId: cardId,
+        cardDetails: cardDetails,
+      });
+    } catch (error) {
+      console.error("Error posting card details to API:", error);
+    }
   };
 
   const getCardDetails = async (cardId: number) => {
@@ -37,19 +44,15 @@ const PlaylistCards: React.FC<PlaylistCardsProps> = ({ cards }) => {
     );
     if (existingCard) {
       const formattedCardData = formatCardData(existingCard);
-      storeCardDetails(cardId, formattedCardData);
+      postCardDetailsToApi(cardId, formattedCardData); // Post card details to the API
       return formatCardData(existingCard);
-    }
-    const storedCardData = localStorage.getItem(`card_${cardId}`);
-    if (storedCardData) {
-      return JSON.parse(storedCardData);
     }
 
     try {
       console.log(`Fetching card details for card ID: ${cardId}`);
       const cardDetails = await fetchSongDetails(cardId);
       if (cardDetails) {
-        storeCardDetails(cardId, cardDetails);
+        postCardDetailsToApi(cardId, cardDetails); // Post card details to the API
         return cardDetails;
       }
     } catch (error) {
