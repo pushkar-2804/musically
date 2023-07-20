@@ -39,7 +39,7 @@ type Status = "loading" | "success" | "error";
 export const ApiContext = createContext<ApiContextType>(initialApiContext);
 
 export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
+  children
 }) => {
   const [apiChartTrack, setApiChartTrack] = useState<ApiData[]>([]);
   const [favList, setFavList] = useState<ICard[]>(() => {
