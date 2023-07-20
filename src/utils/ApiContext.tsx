@@ -81,6 +81,7 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
         `${import.meta.env.VITE_URL_NODE}/user/favlist/${userId}`
       );
       setFavList(favoritesResponse.data);
+      localStorage.setItem("favList", JSON.stringify(favoritesResponse.data));
     } catch (error) {
       console.error("Error fetching favorites from API:", error);
       // Fallback: Retrieve favorites from local storage if available
@@ -98,6 +99,7 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
         `${import.meta.env.VITE_URL_NODE}/user/playlists/${userId}`
       );
       setPlaylists(playlistsResponse.data);
+      localStorage.setItem("playlists", JSON.stringify(playlistsResponse.data));
     } catch (error) {
       console.error("Error fetching playlists from API:", error);
       // Fallback: Retrieve playlists from local storage if available
