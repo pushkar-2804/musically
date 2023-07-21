@@ -23,6 +23,8 @@ const Search = () => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
+  const suggestionDelay = 500;
+  let timer: NodeJS.Timeout;
 
   useEffect(() => {
     if (keyword !== "") {
@@ -43,18 +45,26 @@ const Search = () => {
   }, [keyword]);
   useEffect(() => {
     if (!viewSuggestion) setViewSuggestion(true);
-    // Call the API whenever the input value changes
-    const fetchData = async () => {
-      try {
-        const response = await axios.request(optionsAutoComplete(inputValue));
-        setApiSuggestionData(response.data.hints);
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
-    fetchData();
-  }, [inputValue]);
+    clearTimeout(timer);
+
+    // Set a new timer to fetch suggestions after the delay
+    timer = setTimeout(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.request(optionsAutoComplete(inputValue));
+          setApiSuggestionData(response.data.hints);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchData();
+    }, suggestionDelay);
+
+    // Clear the timer when the component unmounts or inputValue changes
+    return () => clearTimeout(timer);
+  }, [inputValue, viewSuggestion]);
 
   return (
     <div className="wrap">

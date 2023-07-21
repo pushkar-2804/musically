@@ -21,6 +21,8 @@ interface ApiContextType {
   addToPlaylist: (card: ICard, playlistId: number) => void;
   removeFromPlaylist: (card: ICard, playlistId: number) => void;
   statusTrack: Status;
+  statusPlaylist: Status;
+  statusFavorites: Status;
 }
 
 const initialApiContext: ApiContextType = {
@@ -34,6 +36,8 @@ const initialApiContext: ApiContextType = {
   addFavorite: () => {},
   removeFavorite: () => {},
   statusTrack: "loading",
+  statusPlaylist: "loading",
+  statusFavorites: "loading",
 };
 type Status = "loading" | "success" | "error";
 
@@ -49,6 +53,8 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   const [favList, setFavList] = useState<ICard[]>([]);
   const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
   const [statusTrack, setStatusTrack] = useState<Status>("loading");
+  const [statusPlaylist, setStatusPlaylist] = useState<Status>("loading");
+  const [statusFavorites, setStatusFavorites] = useState<Status>("loading");
 
   // Function to post favorites to the API
   const postFavoritesToApi = async () => {
@@ -81,9 +87,11 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
         `${import.meta.env.VITE_URL_NODE}/user/favlist/${userId}`
       );
       setFavList(favoritesResponse.data);
+      setStatusFavorites("success");
       localStorage.setItem("favList", JSON.stringify(favoritesResponse.data));
     } catch (error) {
       console.error("Error fetching favorites from API:", error);
+      setStatusFavorites("error");
       // Fallback: Retrieve favorites from local storage if available
       const storedFavList = localStorage.getItem("favList");
       if (storedFavList) {
@@ -99,9 +107,11 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
         `${import.meta.env.VITE_URL_NODE}/user/playlists/${userId}`
       );
       setPlaylists(playlistsResponse.data);
+      setStatusPlaylist("success");
       localStorage.setItem("playlists", JSON.stringify(playlistsResponse.data));
     } catch (error) {
       console.error("Error fetching playlists from API:", error);
+      setStatusPlaylist("error");
       // Fallback: Retrieve playlists from local storage if available
       const storedPlaylists = localStorage.getItem("playlists");
       if (storedPlaylists) {
@@ -223,6 +233,8 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
         addToPlaylist,
         removeFromPlaylist,
         statusTrack,
+        statusPlaylist,
+        statusFavorites,
       }}
     >
       {children}
