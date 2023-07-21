@@ -1,27 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Card from "../Card/Card";
 import Skeleton from "../Skeleton/Skeleton";
 import { ICard } from "../../constants";
+import { ApiContext } from "../../utils/ApiContext";
 
 interface PlaylistCardsProps {
   cards: ICard[];
 }
 
 const PlaylistCards: React.FC<PlaylistCardsProps> = ({ cards }) => {
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500); // Simulating loading time for demo purposes
-  }, [cards]);
+  const { statusPlaylist } = useContext(ApiContext);
 
   return (
     <div className="rplayed__grid">
-      {loading
+      {statusPlaylist === "loading"
         ? cards.map((_, index) => <Skeleton height="220px" key={index} />)
-        : cards.map((card) => (
+        : cards?.map((card) => (
             <Card
               key={card.id}
               id={card.id}

@@ -1,16 +1,21 @@
 import Card from "../components/Card/Card";
+import Skeleton from "../components/Skeleton/Skeleton";
 import { ApiContext } from "../utils/ApiContext";
 import { useContext } from "react";
 
 const Favourites = () => {
-  const { favList } = useContext(ApiContext);
+  const { favList, statusFavorites } = useContext(ApiContext);
   return (
     <>
       <div className="wrap">
         <section className="rplayed">
           <h2 className="subtitle">Favourites</h2>
           <div className="rplayed__grid">
-            {favList.length ? (
+            {statusFavorites === "loading" ? (
+              [...Array(4).keys()].map((n) => (
+                <Skeleton height="220px" key={n} />
+              ))
+            ) : favList.length ? (
               favList?.map((data) => {
                 return (
                   <Card
