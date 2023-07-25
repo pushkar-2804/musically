@@ -17,13 +17,22 @@ const Auth = () => {
   };
   return (
     <div className="background">
-      <div className="login">
-        <h1>Welcome to Musically</h1> Please SignIn to continue
-        <button onClick={handleSignInWithGoogle}>
-          <img src={googleImg} width="40px" />
-          SignIn With Google
+      <nav className="flex">
+        <h3 className="gradient">Musically</h3>
+        <button className="btnAuth" onClick={handleSignInWithGoogle}>
+          Get Started
         </button>
-      </div>
+      </nav>
+      <main className="flex">
+        <h1>The Best Music App for</h1>
+        <h2 className="gradient">Music Discovery and Management</h2>
+        <p className="lightText subline">Unleash the Rhythm of Your Tunes!</p>
+        <button onClick={handleSignInWithGoogle} className="btnAuth signInBtn">
+          <img src={googleImg} width="40px" />
+          <span className="">SignIn With Google</span>
+        </button>
+        <p className="lightText">No credit card required.</p>
+      </main>
     </div>
   );
 };
