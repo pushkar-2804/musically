@@ -18,8 +18,8 @@ const addOrUpdateLists = async (req, res) => {
       user = new User({ userId, playlists, favList });
     } else {
       // Update the arrays if user already exists
-      if (playlists) user.playlists = playlists;
-      if (favList) user.favList = favList;
+      user.playlists = playlists || user.playlists;
+      user.favList = favList || user.favList;
     }
 
     await user.save();
@@ -29,8 +29,8 @@ const addOrUpdateLists = async (req, res) => {
   }
 };
 
-// Controller to get playlists for a user
-const getPlaylistsByUserId = async (req, res) => {
+// Controller to get playlists and favList for a user
+const getListsByUserId = async (req, res, listType) => {
   try {
     const { userId } = req.params;
     const user = await User.findOne({ userId });
@@ -39,26 +39,20 @@ const getPlaylistsByUserId = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    res.json(user.playlists);
+    res.json(user[listType]);
   } catch (error) {
     errorHandler(res, error);
   }
 };
 
+// Controller to get playlists for a user
+const getPlaylistsByUserId = async (req, res) => {
+  await getListsByUserId(req, res, "playlists");
+};
+
 // Controller to get favList for a user
 const getFavListByUserId = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const user = await User.findOne({ userId });
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    res.json(user.favList);
-  } catch (error) {
-    errorHandler(res, error);
-  }
+  await getListsByUserId(req, res, "favList");
 };
 
 module.exports = { addOrUpdateLists, getPlaylistsByUserId, getFavListByUserId };

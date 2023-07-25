@@ -122,12 +122,18 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // UseEffect to post favorites and playlists to the API whenever they change
   useEffect(() => {
-    postFavoritesToApi();
-  }, [favList]);
+    // Only post favorites to API if fetching from API was successful
+    if (statusFavorites === "success") {
+      postFavoritesToApi();
+    }
+  }, [favList, statusFavorites]);
 
   useEffect(() => {
-    postPlaylistsToApi();
-  }, [playlists]);
+    // Only post playlists to API if fetching from API was successful
+    if (statusPlaylist === "success") {
+      postPlaylistsToApi();
+    }
+  }, [playlists, statusPlaylist]);
 
   // UseEffect to fetch favorites and playlists from the API during initial load if local storage is empty or outdated
   useEffect(() => {

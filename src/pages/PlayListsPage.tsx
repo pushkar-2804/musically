@@ -3,10 +3,11 @@ import { ApiContext } from "../utils/ApiContext";
 import Playlist from "../components/Playlist/Playlist";
 import deleteIcon from "../assets/Delete.svg";
 import ModalCreatePlaylist from "../components/ModalCreatePlaylist/ModalCreatePlaylist";
+import Skeleton from "../components/Skeleton/Skeleton";
 
 const PlayListsPage = () => {
   const [showModal, setShowModal] = useState(false);
-  const { playlists, removePlaylist } = useContext(ApiContext);
+  const { playlists, removePlaylist, statusPlaylist } = useContext(ApiContext);
   const [activePlaylistId, setActivePlaylistId] = useState<number | null>(null);
 
   const handleRemovePlaylist = (playlistId: number) => {
@@ -29,31 +30,37 @@ const PlayListsPage = () => {
           />
         )}
         <div className="rplayed__grid">
-          {playlists.map((playlist) => (
-            <div
-              key={playlist.id}
-              className="card "
-              onClick={() => setActivePlaylistId(playlist.id)}
-            >
-              <div className="d-flex justify-content-between align-items-center">
-                <h3 className="card__title">{playlist.name}</h3>
-                <div className="d-flex align-items-center">
-                  <span className="card__artist">
-                    ({playlist.cards.length})
-                  </span>
-                  <button
-                    onClick={() => handleRemovePlaylist(playlist.id)}
-                    className="btn text-light"
-                  >
-                    <img src={deleteIcon} alt="delete" />
-                  </button>
+          {statusPlaylist === "loading"
+            ? [...Array(3).keys()].map((n) => (
+                <Skeleton height="50px" key={n} />
+              ))
+            : playlists.map((playlist) => (
+                <div
+                  key={playlist.id}
+                  className="card "
+                  onClick={() => setActivePlaylistId(playlist.id)}
+                >
+                  <div className="d-flex justify-content-between align-items-center">
+                    <h3 className="card__title">{playlist.name}</h3>
+                    <div className="d-flex align-items-center">
+                      <span className="card__artist">
+                        ({playlist.cards.length})
+                      </span>
+                      <button
+                        onClick={() => handleRemovePlaylist(playlist.id)}
+                        className="btn text-light"
+                      >
+                        <img src={deleteIcon} alt="delete" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              ))}
         </div>
 
-        <Playlist playlistId={activePlaylistId} length={playlists.length} />
+        {statusPlaylist !== "loading" && (
+          <Playlist playlistId={activePlaylistId} length={playlists.length} />
+        )}
       </div>
     </div>
   );
