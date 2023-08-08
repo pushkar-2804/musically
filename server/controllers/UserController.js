@@ -11,18 +11,12 @@ const errorHandler = (res, error) => {
 const addOrUpdateLists = async (req, res) => {
   try {
     const { userId, playlists, favList } = req.body;
-    let user = await User.findOne({ userId });
+    let user = await User.findOneAndUpdate(
+      { userId },
+      { playlists, favList },
+      { upsert: true, new: true }
+    );
 
-    if (!user) {
-      // Create a new user if not found
-      user = new User({ userId, playlists, favList });
-    } else {
-      // Update the arrays if user already exists
-      user.playlists = playlists || user.playlists;
-      user.favList = favList || user.favList;
-    }
-
-    await user.save();
     res.json({ message: "Lists added/updated successfully" });
   } catch (error) {
     errorHandler(res, error);
