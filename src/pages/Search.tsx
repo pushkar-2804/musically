@@ -27,7 +27,7 @@ const Search = () => {
   let timer: NodeJS.Timeout;
 
   useEffect(() => {
-    if (keyword !== "") {
+    if (keyword.trimEnd() !== "") {
       // setInputValue(keyword);
       setViewSuggestion(false);
       setLoading(true);
@@ -64,7 +64,7 @@ const Search = () => {
 
     // Clear the timer when the component unmounts or inputValue changes
     return () => clearTimeout(timer);
-  }, [inputValue, viewSuggestion]);
+  }, [inputValue]);
 
   return (
     <div className="wrap">
