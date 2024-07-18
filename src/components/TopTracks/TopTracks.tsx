@@ -16,8 +16,14 @@ const TopTracks = () => {
           : apiChartTrack?.map((data) => {
               // setLoading(false);
               const newUrl = data?.attributes?.artwork?.url
-                .replace("{w}", data?.attributes?.artwork?.width || 300)
-                .replace("{h}", data?.attributes?.artwork?.height || 300);
+                .replace(
+                  "{w}",
+                  (data?.attributes?.artwork?.width).toString() || "300"
+                )
+                .replace(
+                  "{h}",
+                  (data?.attributes?.artwork?.height).toString() || "300"
+                );
               return (
                 <Card
                   key={data?.id}
