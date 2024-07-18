@@ -6,6 +6,7 @@ import Skeleton from "../Skeleton/Skeleton";
 
 const TopTracks = () => {
   const { apiChartTrack, statusTrack } = useContext(ApiContext);
+  console.log(apiChartTrack);
 
   return (
     <section className="rplayed">
@@ -15,14 +16,17 @@ const TopTracks = () => {
           ? [...Array(8).keys()].map((n) => <Skeleton height="220px" key={n} />)
           : apiChartTrack?.map((data) => {
               // setLoading(false);
+              const newUrl = data?.attributes?.artwork?.url
+                .replace("{w}", data?.attributes?.artwork?.width || 300)
+                .replace("{h}", data?.attributes?.artwork?.height || 300);
               return (
                 <Card
-                  key={data?.key}
-                  title={data?.title}
-                  id={Number(data?.key)}
-                  artist={data?.subtitle}
-                  url={data?.url}
-                  thumbnail={data?.images?.background}
+                  key={data?.id}
+                  title={data?.attributes?.albumName}
+                  id={Number(data?.id)}
+                  artist={data?.attributes?.artistName}
+                  url={data?.attributes?.url}
+                  thumbnail={newUrl}
                   isFavorite
                 />
               );

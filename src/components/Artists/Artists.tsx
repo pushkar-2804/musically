@@ -15,11 +15,13 @@ export type artistProps = {
 };
 
 const Artists = (props: artistProps) => {
+  console.log(props);
+
   return (
     <section className="rplayed">
       <h2 className="subtitle">Artists</h2>
       <div className="rplayed__grid">
-        {props.artists.hits.map((hit) => {
+        {props?.artists?.hits.map((hit) => {
           return (
             <ArtistCard
               key={hit.artist.adamid}
