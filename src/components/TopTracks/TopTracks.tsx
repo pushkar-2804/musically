@@ -6,7 +6,6 @@ import Skeleton from "../Skeleton/Skeleton";
 
 const TopTracks = () => {
   const { apiChartTrack, statusTrack } = useContext(ApiContext);
-  console.log(apiChartTrack);
 
   return (
     <section className="rplayed">

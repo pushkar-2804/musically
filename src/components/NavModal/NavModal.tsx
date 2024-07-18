@@ -17,7 +17,6 @@ function NavModal() {
         // Handle sign-out errors if needed
         console.error(error);
       });
-    console.log("Logout");
   };
   const [expanded, setExpanded] = useState(false);
 

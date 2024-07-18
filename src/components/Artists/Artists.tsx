@@ -15,8 +15,6 @@ export type artistProps = {
 };
 
 const Artists = (props: artistProps) => {
-  console.log(props);
-
   return (
     <section className="rplayed">
       <h2 className="subtitle">Artists</h2>

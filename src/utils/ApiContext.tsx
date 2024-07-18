@@ -207,7 +207,7 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
     const searchKeyword = async () => {
       try {
         const response = await axios.request(optionsChartTrack);
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setApiChartTrack(response.data.data);
         setStatusTrack("success");
       } catch (error) {
